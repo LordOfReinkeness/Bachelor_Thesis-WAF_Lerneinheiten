@@ -22,11 +22,13 @@ Die in Kapitel \ref{chap:inhalte} beschriebenen Inhalte sollen in einem Praxisna
 Dazu kommt nach den Abwägungen aus Kapitel \ref{chap:produkt-eval}, die Waf-Applikation ModSecurity zum Einsatz.
 Die zu diesem Zweck vorgesehene Laborumgebung muss einige Kriterien erfüllen:
 \begin{description}
-    \item[Einheitliches Deployment:]  Der Ausgangspunkt der Lerneinheiten muss reproduzierbar und wiederholbar sein. Bei wiederholten Durchführungen der Übungen soll es einfach sein den Lernenden ohne zusätzlichen Manuellen Konfigurationsaufwand eine Laborumgebung zu übergeben.
-    \item[Modifizierbarketit der Anwendungen:] Um in den Lerneinheiten grundlegende Techniken zu übermitteln, ist es notwendig Basis-Funktionen entfernen zu können. Und die 
-    \item[Bekannte Basis-Technologien:]
-    \item[Komplexe Netzwerkumgebungen:]
+    \item[Einheitliches Deployment:] Der Ausgangspunkt der Lerneinheiten muss reproduzierbar und wiederholbar sein. Bei wiederholten Durchführungen der Übungen soll es einfach sein den Lernenden ohne zusätzlichem manuellen Konfigurationsaufwand eine Laborumgebung zu übergeben. Diese Laborumgebung muss Platform-unabhängig aufgebaut sein und auf Windows, MacOS unf Linux genutzt werden können.
+    \item[Modifizierbarketit der Anwendungen:] Um in den Lerneinheiten grundlegende Techniken zu übermitteln, ist es notwendig Basis-Funktion der ModSecurity \ac{waf} entfernen zu können. Dies muss automatisierten und einheitlichen Weg erfolgen können.
+    \item[Bekannte Basis-Technologien:] Der Fokus der Lerneinheiten liegt auf dem Erlernen der Technik und Funktion einer \ac{waf}. Um einen Einstieg möglichst direkt zu gestalten sollen hierfür Technologien zuj Einsatz kommen, die den Lernenden schon bekannt sind und keinen zusätzlichen Lernaufwand erzeugen.
+    \item[Komplexe Netzwerkumgebungen:] Da die verschiedenen Anwendungen in der Laborumgebung über Netzwerkkommunikation miteinander sprechen, muss es möglich sein automatisiert virtuelle Netzwerke zu erzeugen.
 \end{description}
+
+Um den oben genannten Anforderungen möglichst genau zu entsprechen, wurde die in Abbildung \ref{fig:lab} schematisch dargestellte Umgebung erstellt.
 
 \begin{figure}[!hbt]
     \centering
@@ -35,3 +37,4 @@ Die zu diesem Zweck vorgesehene Laborumgebung muss einige Kriterien erfüllen:
     \label{fig:lab}
 \end{figure}
 
+Als basis deployment Technologie wird die Containervirtualisierungsumgebung Docker verwendet. Die ermöglicht es 
