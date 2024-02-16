@@ -1,0 +1,25 @@
+%% DOCUMENT FORMATTING
+\usepackage[default]{sourcesanspro}
+\usepackage[ngerman]{babel}
+\usepackage{csquotes}
+\usepackage{geometry}
+\usepackage[hashEnumerators,smartEllipses]{markdown}
+
+%% Hyperlinks
+\usepackage{hyperref}
+
+%% GRAPHICS
+\usepackage{graphicx}
+\usepackage{svg}
+
+% CITATION
+\usepackage{acronym}
+
+\usepackage[style=ieee]{biblatex}
+\addbibresource{sources.bib}
+
+\usepackage[nottoc,numbib]{tocbibind}
+\renewcommand{\listoffigures}{\begingroup
+\tocsection
+\tocfile{\listfigurename}{lof}
+\endgroup}

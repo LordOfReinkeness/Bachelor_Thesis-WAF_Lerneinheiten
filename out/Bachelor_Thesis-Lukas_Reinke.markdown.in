@@ -1,0 +1,34 @@
+    NAT (Network Address Translation)
+    - Layer 2 & 3 (IP & Port)
+    - Internetzugang
+    - Funktion:
+        - Zuordnung von IP-Adressen: n private IPs -> 1 öffentlichen IP.
+        - Adressenspeicherung
+        - Einfachheit des Netzes
+    - Sicherheit:
+        - grundlegende
+        - Verbirgt die interne Netzwerkstruktur
+        - keine Verschlüsselung
+
+    Reverse Proxy
+    - Layer 5 (HTTP, HTTPS, FTP,\dots)
+    - Webanwendungen, CDNs, Schutz interner Netzwerke
+    - Funktion:
+        - Abfrageweiterleitung von Clients -> Server
+        - Lastausgleich
+        - Server-Anonymität
+        - Caching
+    - Sicherheit:
+        - SSL-Terminierung
+        - Server-Identitäten verbergen
+        - Grundlegende Normalisierungs-Operationen
+
+    Vergleich:
+    - NAT: Netzwerkebene <-> Reverse Proxy: Anwendungsebene
+    - Sicherheit:
+        - NAT: quasi nicht
+        - Reverse Proxy: Verschlüsselung & Normalisierung
+        - Komplexität: Reverse Proxy -> Konfigurationsaufwand
+
+    WAF Nächste stufe
+    Konzeptionell Reverse Proxy Modul

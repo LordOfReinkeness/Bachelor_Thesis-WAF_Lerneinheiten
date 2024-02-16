@@ -1,0 +1,52 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{subfiles}
+
+\input{chapters/config/00.1_config}
+\begin{document}
+    \input{chapters/config/00.2_titlepage}
+    \input{chapters/00.3_abstract}
+    \input{chapters/config/00.4_preamble}
+
+    %chapters
+    \section{Einleitung}
+    \subsection{Einleitung}
+    \input{./chapters/01.1_Einleitung.tex}
+    \subsection{Umfang und Abgrenzung}
+    \input{./chapters/01.2_Umfang.tex}
+    \pagebreak
+
+    \section{Theoretische Grundlagen}
+    \subsection{NAT und Reverse Proxy}
+    \input{./chapters/02.1_Reverse-Proxy.tex}
+    \subsection{HTTP}
+    \input{./chapters/02.2_HTTP.tex}
+    \subsection{OWASP Top-Ten}
+    \input{./chapters/02.3_owasp.tex}
+    \subsection{Web Application Firewall}
+    \input{./chapters/02.4_WAF.tex}
+    \pagebreak
+
+    \section{Design der Lernumgebung}
+    \subsection{Zu übermittelnde Inhalte}
+    \label{chap:inhalte}
+    \input{./chapters/03.1_inhalte.tex}
+    \subsection{Technische Umsetzung}
+    \input{./chapters/03.2_technisceh-Umsetzung.tex}
+    \subsection{Lerneinheiten}
+    \input{./chapters/03.3_Lerneinheiten.tex}
+    \pagebreak
+
+    \section{Evaluation}
+    \subsection{Evaluation mit Probanden}
+    \input{./chapters/04.1_Evaluation.tex}
+    \subsection{Überlegungen zur Bewertung}
+    \input{./chapters/04.1_Bewerung.tex}
+    \pagebreak
+
+
+    \section{Fazit}
+    \input{./chapters/05.0_Fazit.tex}
+    \pagebreak
+
+    \input{chapters/config/00.5_after}
+\end{document}
