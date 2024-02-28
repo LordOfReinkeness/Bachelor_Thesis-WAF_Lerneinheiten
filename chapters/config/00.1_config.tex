@@ -1,24 +1,31 @@
+% PACKAGES
 %% DOCUMENT FORMATTING
 \usepackage[default]{sourcesanspro}
+\usepackage[nottoc,numbib]{tocbibind}
+
+%% Languages
 \usepackage[ngerman]{babel}
 \usepackage{csquotes}
-\usepackage{geometry}
-\usepackage[hashEnumerators,smartEllipses]{markdown}
 
 %% Hyperlinks
 \usepackage{hyperref}
 
 %% GRAPHICS
 \usepackage{graphicx}
-\usepackage{svg}
+\usepackage{geometry}
 
-% CITATION
+%% CITATION
 \usepackage{acronym}
-
 \usepackage[style=ieee]{biblatex}
+
+
+% CONFIGURATION
+\setlength{\parindent}{20pt}
+
+%% sources
 \addbibresource{sources.bib}
 
-\usepackage[nottoc,numbib]{tocbibind}
+%% list of figures
 \renewcommand{\listoffigures}{\begingroup
 \tocsection
 \tocfile{\listfigurename}{lof}

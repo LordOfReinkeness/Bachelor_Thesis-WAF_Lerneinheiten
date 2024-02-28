@@ -1,0 +1,63 @@
+% \ac{nat} (Network Address Translation)
+% - Layer 2 & 3 (IP & Port)
+% - Internetzugang
+% - Funktion: 
+%     - Zuordnung von IP-Adressen: n private IPs -> 1 öffentlichen IP.
+%     - Adressenspeicherung
+%     - Einfachheit des Netzes
+% - Sicherheit:
+%     - grundlegend
+%     - Verbirgt die interne Netzwerkstruktur
+%     - keine Verschlüsselung
+% 
+% Reverse Proxy
+% - Layer 5 (HTTP, HTTPS, FTP,\dots)
+% - Webanwendungen, CDNs, Schutz interner Netzwerke
+% - Funktion:
+%     - Abfrageweiterleitung von Clients -> Server
+%     - Lastausgleich
+%     - Server-Anonymität
+%     - Caching
+% - Sicherheit:
+%     - SSL-Terminierung
+%     - Server-Identitäten verbergen
+%     - Grundlegende Normalisierungs-Operationen
+% 
+% Vergleich:
+% - \ac{nat}: Netzwerkebene <-> Reverse Proxy: Anwendungsebene 
+% - Sicherheit: 
+%     - \ac{nat}: quasi nicht
+%     - Reverse Proxy: Verschlüsselung & Normalisierung
+%     - Komplexität: Reverse Proxy -> Konfigurationsaufwand
+% 
+% WAF Nächste stufe
+% Konzeptionell Reverse Proxy Modul
+Die Funktion einer \ac{waf} baut auf der Fähigkeit aus Internet-Trafic weiterleiten und inspizieren zu können.
+Die Technische Grundlage hierfür ist ein Reserve Proxy.
+Im Folgenden wird beschrieben wie diese Technologie funktioniert, wie schon durch den Einsatz eines Proxies erste Sicherheitsaspekte zum Tragen kommen und wie sich ein Reverse Proxy von einfacheren Technologien wie \ac{nat} unterscheiden.
+
+\paragraph{Network Acces Translation (NAT)}\ \\
+\ac{nat} ist der Oberbegriff für Funktionen mit denen es möglich ist, die IP Adressen von Netzwerk-Traffic umzuschreiben.
+Das heißt, Traffic kann über einen Relay-Punkt an unterschiedliche Clients oder Server weitergeleitet werden.
+Es wird auf den Schichten zwei und drei des TCP/IP Schichtenmodells gearbeitet.
+Ein Einsatzgebiet für \ac{nat} ist zum Beispiel die Adress-Umverteilung an einem Router.
+Dadurch besteht die Möglichkeit an einer IP-Adresse mehrere Server zu betreiben.
+Anfragen werden, je nachdem an welchem Port sie eintreffen, an eine Unterschiedliche IP-Adressen \textit{hinter} dem \ac{nat}-Gerät weitergeleitet.
+
+Diese Technologie ist in seiner Umsetzung sehr niedrig Komplex, ermöglicht jedoch so gut wie keine Sicherheitsvorteile.
+Der einzige kleine Vorteil kann die Verschleierung einer Internen Netzwerkstruktur sein.
+Es ist nicht möglich tiefer gehende Filterung vorzunehmen, da auf einer ISO/OSI Schicht gearbeitet wird auf der die Entschlüsselung von Inhalten nicht möglich ist.
+Protokolle die Verschlüsselung anbieten arbeiten auf Höheren Schichten.
+
+\paragraph{Reverse Proxy}\ \\
+Ein Reverse Proxy ist in seiner Funktion deutlich Komplexer als \ac{nat}.
+Operiert wird auf Stufe vier des TCP/IP Schichtenmodells.
+Ein Reverse Proxy fungiert, wie ein \ac{nat} fähiges Gerät, als Weiterleitungsstelle für Netzwerk-Verkehr.
+Der Unterschied liegt jedoch auf der Protokoll-Ebene.
+Ein Reverse Proxy ist in der Lage höher-Komplexe Protokolle wie HTTP, HTTPS oder FTP zu verstehen und die Weiterleitung aufgrund dem Inhalt der jeweiligen Pakete vorzunehmen.
+
+Hieraus ergeben sich einige Sicherheitsaspekte die durch einen Reverse Proxy entstehen.
+Da ein Reverse Proxy den Inhalt der HTTP Pakte inspiziert und weiterleitet kann eine Normalisierung der Anfragen erfolgen.
+Dies kann eine Verteidigung gegen Path-Traversal Attacken sein, bei denen sich Zugang zu Inhalten verschafft werden kann die nicht Veröffentlicht werden sollten.
+
+\pagebreak
