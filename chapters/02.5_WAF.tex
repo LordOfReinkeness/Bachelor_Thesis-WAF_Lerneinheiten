@@ -12,14 +12,14 @@
 %         - Black- vs. whitelisting
 %         - Vordefiniertes Regelwerk
 \label{chap:waf-theory}
-Ein \ac{waf} ist eine Sicherheits-Applikation, die in der Lage ist den Datenverkehr zu und von einer Web-Anwendung zu Analysieren.
+Ein \ac{waf} ist eine Sicherheits-Applikation, die in der Lage ist den Datenverkehr zu und von einer Webanwendung zu Analysieren.
 Hierbei werden die Übertragenen Inhalte in der Tiefe auf schädliche Inhalte überprüft.
 Der in Abbildung \ref{fig:waf-porcess-flow} dargestellte Prozessablauf beschreibt wie eine \ac{waf} mit eingehenden Nachrichten umgeht.
 
 \begin{figure}[!hbt]
     \centering
     \includegraphics[width=0.9\textwidth]{./images/Waf-Process-fliow.png}
-    \caption{Prozess Ablauf der Verarbeitung durch eine \ac{waf}}
+    \caption{Prozess Ablauf der Verarbeitung durch eine Web Application Firewall}
     \label{fig:waf-porcess-flow}
 \end{figure}
 
@@ -131,7 +131,27 @@ Ist der Request Parsing Schritt abgeschlossen, liegt einen Nachricht in einer Fo
 Die normalisierte Nachricht kann von der \ac{waf} nun auf schädliche Inhalte untersucht werden.
 In der Regel erfolgt das durch den Abgleich gegen eine Regel.
 Eine Regel besteht aus einem regulären Ausdruck und einem Set an Instruktionen wie mit der Nachricht, im Fall einer Übereinstimmung, verfahren werden soll.
+Es ist möglich Nachrichten zu transformieren, beispielsweise können HTTP-header hinzugefügt oder modifiziert werden.
+Außerdem wird das weitere Verfahren definiert;
 
+\begin{description}
+    \item[drop] lehnt die Nachricht ab, es werden keine weiteren Überprüfungen durchgeführt und die Nachricht nicht weitergeleitet.
+    \item[pass] gibt die Nachricht weiter ohne weitere Überprüfungen durchzurühren.
+    Ist eine Konfiguration nicht sorgfältig überprüft kann dies zu Einschränkungen in der Sicherheit einer \ac{waf} führen.
+\end{description}
+
+In den Operationen können auch weitere Matching-Operationen definiert werden an die die Nachricht weitergeleitet werden soll.
+So kann die Menge an Regeln reduziert werden gegen die die Nachricht überprüft werden muss.
+Es wird ein Baum an Regeln Aufgebaut und nur die für eine Nachricht relevanten Checks ausgeführt.
+So muss beispielsweise nur dann wenn der HTTP-Header der signalisiert, dass der HTTP-Body JSON formatiert ist eine überprüft werden ob das JSON gültig ist.\\
+
+Das Regelwerk einer \ac{waf} kann entweder durch \textit{white-} oder \textit{Blacklisting} erfolgen.
+Whitelisting ermöglicht es genau zu kontrollieren welche Anfragen an einen Server gestellt werden könne.
+Der daraus resultierende Konfigurationsaufwand für eine*n \ac{waf}-Consultant*in ist jedoch im Vergleich zu Blacklisting deutlich erhöht.
+Blacklisting hingegen ermöglicht bei unsicherer Konfiguration, dass das Umgehen der \ac{waf} deutlich einfacher möglich ist.\\
+
+Neben Regelbasiertem erkennen schädlicher Inhalte bieten einige \acp{waf} Signaturbasierte verfahren an.
+Diese werden im rahmen dieser Thesis jedoch nicht genauer betrachtet.
 
 \paragraph{Logging}
 % - Jeder Schritt wird protokolliert
@@ -139,8 +159,12 @@ Eine Regel besteht aus einem regulären Ausdruck und einem Set an Instruktionen 
 %         - Erfiltrierte Daten
 %         - betroffene Nutzer
 %     - Nachvollziehbarkeit von Fehlern
-% - Log analyse
+% - Log Analyse
 %     - Hauptarbeit eines WAF-Consultants
+
+Ein Weiterer Schritt in der Verarbeitung einer Nachricht ist das Logging.
+Dies ist zur Nachvollziehbarkeit der Operation einer WAF wichtig und ermöglicht es die Qualität der Konfiguration der \ac{waf} zu beurteilen.
+Aber auch nach einem erfolgreichen Angriff nachvollziehen wie dieser erfolgt ist und eventuell Schlüsse auf den Verursacher zuzulassen.
 
 \paragraph{Weiteres Vorgehen}
 % - Request Ablehnen
@@ -149,11 +173,18 @@ Eine Regel besteht aus einem regulären Ausdruck und einem Set an Instruktionen 
 %     - Ablehnen bei schädlichen Inhalten nicht notwendig
 %     - request kann umgeschrieben werden
 %         - Abschnitte entfernen
-%         - Abschnitte Escapeen
-% - unmodofiziertes weiterleiten
+%         - Escape Abschnitte 
+% - unmodifiziertes weiterleiten
 % 
 % - aus normalisierter form HTTP-Request erstellen
 % - an server übergeben
+
+Ist die Bearbeitung durch die \ac{waf} erfolgt muss die Nachricht wieder in ein verständliches HTTP überführt werden.
+Etwaige Änderungen an der Nachricht die durch die \ac{waf} durchgeführt werden müssen übernommen werden.
+Des Weiteren muss etwaige Transportsicherheit aud dem Weg zum Ziel angewendet werden.\\
+
+Wird eine Nachricht abgelehnt, kann in deren Statt eine Antwort der \ac{waf} an den Client gesendet werden die ihn über den Vorgang informiert.
+Beispielsweise kann eine HTTP-Nachricht mit einem 400er Status und der Information, dass der Client nicht die Berechtigung hat einen Aktion durchzuführen.
 
 \subsubsection{Erweiterte Funktionen}
 \paragraph{Lernen von Regeln aus vorhergegangenem Datenverkehr}

@@ -80,8 +80,8 @@ Hierfür werden separate Docker-Netzwerke erstellt die an den Containern angesch
 Um den Nutzern eine Interaktion mit den Containern zu ermöglichen werden einige Ports aus der Docker-Umgebung freigegeben:
 
 \begin{itemize}
-    \item Die Web-Oberfläche des Juice Shops (Port 80 [HTTP])
-    \item Die, durch die \ac{waf} gesicherte, Web-Oberfläche des Juice Shops (Port 443 [HTTPS])
+    \item Die Weboberfläche des Juice Shops (Port 80 [HTTP])
+    \item Die, durch die \ac{waf} gesicherte, Weboberfläche des Juice Shops (Port 443 [HTTPS])
     \item Das Management Interface der Portainer-Anwendung (Port 8443 ][HTTPS])
 \end{itemize}
 
@@ -96,7 +96,7 @@ Ein weiteres Problem ist, dass durch das Durchreichten von Dateien zwischen Cont
 Um diesen Problemen Vorzubeugen wird die Laborumgebung als Linux Virtuelle Maschine ausgeliefert.
 In dieser ist eine Docker Umgebung vorinstalliert und die Containerumgebung bereits präsent und wird automatisch gestartet.
 Dies ermöglicht die Auslieferung mittels einer VM-Datei, in der die Konfigurationen schon an einer einheitlichen Stelle enthalten sind.
-Lernende müssen zur Nutzung also nur eine Virtuelle Maschinen auf ihren Rechnern importieren und mittels eines Virtuellen Netzwerk Interface auf die Web-Oberflächen zugreifen.
+Lernende müssen zur Nutzung also nur eine Virtuelle Maschinen auf ihren Rechnern importieren und mittels eines Virtuellen Netzwerk Interface auf die Weboberflächen zugreifen.
 Die Konfiguration der \ac{waf} findet in Textdateien statt, die sich in der Virtuellen Maschine befinden.
 Der Zugriff auf diese ist mit dem Text-Editor Visual Studio Code der Firma Microsoft vorgesehen, da dieser eine SSH Erweiterung hat die es mit geringen Konfigurationsaufwand ermöglicht Dateien auf entfernten Servern oder in Virtuellen Maschinen zu bearbeiten.
 
