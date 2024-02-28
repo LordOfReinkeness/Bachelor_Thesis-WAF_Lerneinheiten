@@ -7,7 +7,7 @@
 %     - auf TCP/IP Layer 5
 %     - HTTP, HTTPS, FTP
 % - Traffic Analyse in Tiefe (Request & Response)
-%     - HTTP (kapitel 5.2) beschreibt diverse Angriffswege
+%     - HTTP (Kapitel 5.2) beschreibt diverse Angriffswege
 %     - Erkennung anhand von Regeln
 %         - Black- vs. whitelisting
 %         - Vordefiniertes Regelwerk
@@ -31,7 +31,7 @@ Als schädlich erkannte Inhalte können sowohl in einer Anfrage als auch Antwort
 Anstatt einer abgelehnten Nachricht kann eine \ac{waf} auch eine eigene Antwort an den Client senden.
 Das ermöglicht Nutzer festzustellen, dass ein Fehler in seiner Anfrage oder der Konfiguration der \ac{waf} vorliegt.
 Mittels einer ID, die der ersetzten Antwort angehängt wird lässt sich das Verhalten im Nachhinein nachvollziehen
-Neben den beiden Möglichkeiten weiterleiten und Ablehnen kann eine \ac{waf} die in einer Anfrage erkannten schädlichen Inhalte auch neutralisieren und die Nachricht weitergeben.
+Neben den beiden Möglichkeiten weiterleiten und Ablehnen kann eine \ac{waf} die in einer Anfrage erkannten schädlichen Inhalte auch neutralisieren und die Nachricht weitergeben.\\
 
 Eine \ac{waf} wird in produktiven Umgebungen in einem Netzwerk \textit{vor} den zu schützenden Anwendungen positioniert.
 Das heißt der geschützte Server befindet sich in einer \ac{dmz}.
@@ -44,7 +44,7 @@ Dadurch ergeben sich einige Änderungen im Aufbau des Deployments:
 Es muss sichergestellt werden, dass ein Client der eine Verbindung zum Server aufbauen möchte, bei der Namensauflösung (DNS) auf die \ac{waf} geleitet wird.
 Der Server hingegen stellt sicher nur Verbindungen von der \ac{waf} zu akzeptieren.
 Dies kann mit einer Firewall, die nur Verbindungen von der \ac{waf} akzeptiert, realisiert.
-Es existieren auch Zertifikat basierte Verfahren, die die Authentizität der Datenherkunft sicherstellen.
+Es existieren auch Zertifikat basierte Verfahren, die die Authentizität der Datenherkunft sicherstellen.\\
 
 Eine klassische Firewall nimmt Filterung auf Internet- und Transportschicht (Layer 2 und 3) des TCP/IP Modells vor.
 Achtet also hauptsächlich auf IP-Adresse und Port Nummer.
@@ -52,7 +52,7 @@ Eine \ac{waf} hingegen arbeitet auf der Anwendungsschicht (Layer4).
 Der Fokus liegt auf Internet-Protokollen wie HTTP und HTTPS. 
 Aber auch Datentransferprotokolle wie FTP sind im Umfang einer \ac{waf}.
 
-Da es sich bei HTTP und auch FTP um plaintext Protokolle handelt, bei denen der Datentransport in einer Menschenlesbarer Form erfolgt, unterscheidet sich die Funktion einer \ac{waf} grundsätzlich von der einer klassischen Firewall.
+Da es sich bei HTTP und auch FTP um plaintext Protokolle handelt, bei denen der Datentransport in einer menschenlesbarer Form erfolgt, unterscheidet sich die Funktion einer \ac{waf} grundsätzlich von der einer klassischen Firewall.
 Die Erkennung schädlicher Inhalte erfolgen aufgrund von Regeln, die Muster beschreiben die auf schädliche Inhalte Hindeuten.
 In der Implementierung wird dies in der Regel durch die Verwendung Regulärer Ausdrücke realisiert, diese bilden Muster ab die mit den Inhalten des Datenverkehrs abgeglichen werden.
 Eine \ac{waf} muss jedes Datenpaket mit einer Anzahl von Regeln in der Größenordnung mehrerer hunderttausend bis Millionen regulärer Ausdrücke abgleichen.
@@ -130,8 +130,7 @@ Ist der Request Parsing Schritt abgeschlossen, liegt einen Nachricht in einer Fo
 
 Die normalisierte Nachricht kann von der \ac{waf} nun auf schädliche Inhalte untersucht werden.
 In der Regel erfolgt das durch den Abgleich gegen eine Regel.
-Eine Regel besteht aus einem regulären Ausdruck und einem Set an Instruktionen wie mit der Nachricht, im Fall das eine Übereinstimmung besteht, verfahren werden soll. 
-
+Eine Regel besteht aus einem regulären Ausdruck und einem Set an Instruktionen wie mit der Nachricht, im Fall einer Übereinstimmung, verfahren werden soll.
 
 
 \paragraph{Logging}
