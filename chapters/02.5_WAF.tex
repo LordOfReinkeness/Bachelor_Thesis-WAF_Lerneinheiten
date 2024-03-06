@@ -20,6 +20,7 @@ Der in Abbildung \ref{fig:waf-porcess-flow} dargestellte Prozessablauf beschreib
     \centering
     \includegraphics[width=0.9\textwidth]{./images/Waf-Process-fliow.png}
     \caption{Prozess Ablauf der Verarbeitung durch eine Web Application Firewall}
+    \floatfoot{Quelle: In Anlehnung an \cite[S. 8]{guptaWEBAPPLICATIONFIREWALL2007}}
     \label{fig:waf-porcess-flow}
 \end{figure}
 
@@ -43,17 +44,20 @@ Die \ac{waf} ist hier nicht im selben Netzwerk wie der Server sondern wird in ei
 Die Daten fließen von der \ac{waf} durch das öffentliche Internet zu den zu sichernden Servern.
 Dadurch ergeben sich einige Änderungen im Aufbau des Deployments:
 Es muss sichergestellt werden, dass ein Client der eine Verbindung zum Server aufbauen möchte, bei der Namensauflösung (DNS) auf die \ac{waf} geleitet wird.
+%% Ungenaue Vereinfachung
 Der Server hingegen stellt sicher nur Verbindungen von der \ac{waf} zu akzeptieren.
 Dies kann mit einer Firewall, die nur Verbindungen von der \ac{waf} akzeptiert, realisiert.
 Es existieren auch Zertifikat basierte Verfahren, die die Authentizität der Datenherkunft sicherstellen.\\
 
+% out of place
+
 Eine Firewall\footnote{Wenn im folgenden von einer \textit{Firewall} gesprochen wird ist eine Firewall auf IP und Port Ebene gemeint. Eine Web Application Firewall wir immer mit \ac{waf} bezeichnet.} nimmt Filterung auf Internet- und Transportschicht (Layer 2 und 3) des TCP/IP Modells vor.
 Operiert also hauptsächlich mit IP-Adresse und Port Nummer.
 Eine \ac{waf} hingegen arbeitet auf der Anwendungsschicht (Layer4).
-Der Fokus liegt auf Internet-Protokollen wie HTTP und HTTPS. 
+Der Fokus liegt auf Internet-Protokollen wie \ac{http} und \ac{https}. 
 Aber auch Datentransferprotokolle wie FTP sind im Funktionsumfang einer \ac{waf}.
 
-Da es sich bei HTTP und auch FTP um plaintext Protokolle handelt, bei denen der Datentransport in einer menschenlesbarer Form erfolgt, unterscheidet sich die Funktion einer \ac{waf} grundsätzlich von der einer Firewall.
+Da es sich bei \ac{http} und auch FTP um plaintext Protokolle handelt, bei denen der Datentransport in einer menschenlesbarer Form erfolgt, unterscheidet sich die Funktion einer \ac{waf} grundsätzlich von der einer Firewall.
 Die Erkennung schädlicher Inhalte erfolgt aufgrund von Regeln, die Muster beschreiben die auf diese hindeuten.
 In der Implementierung wird dies in der Regel durch die Verwendung Regulärer Ausdrücke realisiert, diese bilden Muster ab die mit den Inhalten des Datenverkehrs abgeglichen werden.
 Eine \ac{waf} muss jedes Datenpaket mit einer Anzahl von Regeln in der Größenordnung mehrerer hunderttausend bis Millionen Regeln abgleichen.
@@ -61,11 +65,11 @@ Der Rechenaufwand kann zwar durch optimierte regex-Engines oder Tree-Pruning-Alg
 Jedoch ist der Rechenaufwand in einer \ac{waf} relativ hoch und die Hardware Anforderungen an eine \ac{waf} groß.
 Auch muss bei einer vorgeschalteten \ac{waf} mit erhöhten Antwortzeiten gerechnet werden, die sich im Millisekunden Bereich befinden.
 
-Da es im Aktuellen stand der Technik üblich ist Internet-Datenübertragung zu verschlüsseln, muss eine \ac{waf} in der Lage sein die verschlüsselte Kommunikation zu öffnen um so die Inhalte analysieren zu können.
-Die SSL Verschlüsselung des HTTPS Protokolls wird also an der \ac{waf} terminiert.
+Da es im Aktuellen stand der Technik üblich ist Internet-Datenübertragung zu verschlüsseln, muss eine \ac{waf} in der Lage sein die verschlüsselte Kommunikation zu öffnen um so die Inhalte analysieren zu können. %% Nicht Öffnen Terminieren
+Die SSL Verschlüsselung des \ac{https} Protokolls wird also an der \ac{waf} terminiert.
 Die Kommunikation zwischen Server \textit{hinter} der \ac{waf} und der \ac{waf} selber kann entweder unverschlüsselt oder mit einem separaten Satz Zertifikate erfolgen.
 Die \ac{waf} verschlüsselt die Kommunikation nach der Verarbeitung wieder um sie an den Server weiterzugeben.
-Die Abwägung ob in der \ac{dmz} verschlüsselt kommuniziert wird muss anhand von Compliance-Gesichtspunkten und der vertrauenswürdigkeit der Umgebung erfolgen\cite{guptaWEBAPPLICATIONFIREWALL2007}.
+Die Abwägung ob in der \ac{dmz} verschlüsselt kommuniziert wird muss anhand von Compliance-Gesichtspunkten und der vertrauenswürdigkeit der Umgebung erfolgen\cite{guptaWEBAPPLICATIONFIREWALL2007}.%% CLoud waf notwendig
 
 \subsubsection{Verarbeitung einer Anfrage}\cite{yuanResearchImplementationWEB2019}
 Der Zentrale Punkt, der in der der Thesis anhängenden Laborumgebung vermittelt werden soll, ist die Verarbeitung von Daten durch eine \ac{waf}.
@@ -77,8 +81,8 @@ Die Verarbeitung in einer \ac{waf} erfolgt in vier Schritten. Der Fokus der Besc
 
 \paragraph{Request Parsing}
 Das Request Parsing ist der erste Schritt nach dem Eintreffen einer Nachricht an einer \ac{waf}.
-Vor diesem Schritt ist etwaige Verschlüsselung schon geöffnet, die Nachricht liegt in HTTP-Form vor.
-Die Felder der HTTP-Nachricht werden nun ausgelesen und in ein Format überführt, das eine standardisierte Verarbeitung durch die \ac{waf} ermöglicht.
+Vor diesem Schritt ist etwaige Verschlüsselung schon geöffnet, die Nachricht liegt in \ac{http}-Form vor.
+Die Felder der \ac{http}-Nachricht werden nun ausgelesen und in ein Format überführt, das eine standardisierte Verarbeitung durch die \ac{waf} ermöglicht.
 In dieser Form besteht jedoch immer noch eine gewisse Ambiguität in der Nachricht, die in einem Angriff genutzt werden könnte.
 Deswegen muss einen Normalisierung der Felder erfolgen,
 In Abbildung \ref{fig:norming} sind die Charakteristiken die Normalisiert werden schematisch dargestellt.
@@ -87,6 +91,7 @@ In Abbildung \ref{fig:norming} sind die Charakteristiken die Normalisiert werden
     \centering
     \includegraphics[width=0.9\textwidth]{./images/Normalisierung.png}
     \caption{Normalisierungsoperationen}
+    \floatfoot{Quelle: In Anlehnung an \cite[S. 6]{guptaWEBAPPLICATIONFIREWALL2007}}
     \label{fig:norming}
 \end{figure}
 
@@ -109,7 +114,7 @@ Ist der Request Parsing Schritt abgeschlossen, liegt einen Nachricht in einer Fo
 Die normalisierte Nachricht kann von der \ac{waf} nun auf schädliche Inhalte untersucht werden.
 In der Regel erfolgt das durch den Abgleich gegen eine Regel.
 Eine Regel besteht aus einem regulären Ausdruck und einem Set an Instruktionen wie mit der Nachricht, im Fall einer Übereinstimmung mit dem regulären Ausdruck, verfahren werden soll.
-Es ist möglich Nachrichten zu transformieren, beispielsweise können HTTP-header hinzugefügt oder modifiziert werden.
+Es ist möglich Nachrichten zu transformieren, beispielsweise können \ac{http}-header hinzugefügt oder modifiziert werden.
 Außerdem wird das weitere Verfahren definiert.
 
 \begin{description}
@@ -121,7 +126,7 @@ Außerdem wird das weitere Verfahren definiert.
 In den Operationen können auch weitere Matching-Operationen definiert werden an die die Nachricht weitergeleitet werden soll.
 So kann die Menge an Regeln reduziert werden gegen die eine Nachricht überprüft werden muss.
 Es wird ein Baum an Regeln aufgebaut und nur die für eine Nachricht relevanten Checks ausgeführt.
-So muss beispielsweise nur dann wenn der HTTP-Header der signalisiert, dass der HTTP-Body JSON formatiert ist, eine Überprüfung durchgeführt werden ob es sich um gültiges JSON handelt.
+So muss beispielsweise nur dann wenn der \ac{http}-Header der signalisiert, dass der \ac{http}-Body JSON formatiert ist, eine Überprüfung durchgeführt werden ob es sich um gültiges JSON handelt.
 
 Das Regelwerk einer \ac{waf} kann entweder durch \textit{White-} oder \textit{Blacklisting} erfolgen.
 Whitelisting ermöglicht es genau zu kontrollieren welche Anfragen an einen Server gestellt werden könne.
@@ -137,12 +142,12 @@ Dies ist zur Nachvollziehbarkeit der Operation einer WAF wichtig und ermöglicht
 Aber auch nach einem erfolgreichen Angriff nachvollziehen wie dieser erfolgt ist und eventuell Schlüsse auf den Verursacher zuzulassen.
 
 \paragraph{Weiteres Vorgehen}
-Ist die Bearbeitung durch die \ac{waf} erfolgt muss die Nachricht wieder in ein verständliches HTTP überführt werden.
+Ist die Bearbeitung durch die \ac{waf} erfolgt muss die Nachricht wieder in ein verständliches \ac{http} überführt werden.
 Etwaige Änderungen an der Nachricht die durch die \ac{waf} durchgeführt werden müssen übernommen werden.
 Des Weiteren muss etwaige Transportsicherheit auf dem Weg zum Ziel wieder angewendet werden.\\
 
 Wird eine Nachricht abgelehnt, kann in deren Statt eine Antwort der \ac{waf} an den Client gesendet werden die ihn über den Vorgang informiert.
-Beispielsweise kann eine HTTP-Nachricht mit einem 400er Status und der Information, dass der Client nicht die Berechtigung hat eine Aktion durchzuführen.
+Beispielsweise kann eine \ac{http}-Nachricht mit einem 400er Status und der Information, dass der Client nicht die Berechtigung hat eine Aktion durchzuführen.
 
 \subsubsection{Erweiterte Funktionen}
 \paragraph{Lernen von Regeln aus vorhergegangenem Datenverkehr}

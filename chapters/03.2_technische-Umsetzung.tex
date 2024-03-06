@@ -26,6 +26,7 @@ Um den oben genannten Anforderungen möglichst genau zu entsprechen, wird als Te
     \centering
     \includegraphics[width=0.9\textwidth]{./images/lab-setup.png}
     \caption{Aufbau der Laborumgebung}
+    \floatfoot{Quelle: Eigene Darstellung}
     \label{fig:lab}
 \end{figure}
 
@@ -55,7 +56,7 @@ Wie in Abbildung \ref{fig:lab} dargestellt, werden in der Laborumgebung vier Con
     Die genauen Änderungen werden in den Sub-Kapiteln von Kapitel \ref{sec:learnings} im Detail beschrieben.
 
     \item[Python Test-Script:] Dieser Container enthält ein Python Skript, das es den Lernenden mittels des Unittest-Frameworks \textit{Pytest} ermöglicht, die erarbeiteten Lösungen zu überprüfen.
-    Das Skript schickt HTTP-Requests durch die \ac{waf} und evaluiert die Antworten, um den Lernenden Rückmeldung über den Erfolg ihrer Konfiguration zu geben.
+    Das Skript schickt \ac{http}-Requests durch die \ac{waf} und evaluiert die Antworten, um den Lernenden Rückmeldung über den Erfolg ihrer Konfiguration zu geben.
     Die jeweilige Funktion wird in den Sub-Kapiteln von Kapitel \ref{sec:learnings} im Detail beschrieben.
 
     \item[Portainer:] Die Anwendung \textit{Portainer} ermöglicht es eine Docker Umgebung mittels einer Grafischen Oberfläche zu verwalten.
@@ -70,9 +71,9 @@ Hierfür werden separate Docker-Netzwerke erstellt die an den Containern angesch
 Um den Nutzern eine Interaktion mit den Containern zu ermöglichen werden einige Ports aus der Docker-Umgebung freigegeben:
 
 \begin{itemize}
-    \item Die ungesicherte Weboberfläche des Juice Shops (Port 80 [HTTP])
-    \item Die, durch die \ac{waf} gesicherte, Weboberfläche des Juice Shops (Port 443 [HTTPS])
-    \item Das Management Interface der Portainer-Anwendung (Port 9443 [HTTPS])
+    \item Die ungesicherte Weboberfläche des Juice Shops (Port 80 [\ac{http}])
+    \item Die, durch die \ac{waf} gesicherte, Weboberfläche des Juice Shops (Port 443 [\ac{https}])
+    \item Das Management Interface der Portainer-Anwendung (Port 9443 [\ac{https}])
 \end{itemize}
 
 Durch die oben beschriebene Docker Umgebung sind Anforderungen an die Laborumgebung wie dem \textit{einheitlichen Deployment} und der \textit{Modifizierbarkeit der Anwendungen} bereits erfüllt.

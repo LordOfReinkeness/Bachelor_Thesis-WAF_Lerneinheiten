@@ -23,7 +23,7 @@ Anstatt eine Verbindung direkt mit dem Ziel aufzubauen kommuniziert ein Client m
 Ein Proxy dient also als Vermittler zwischen Client und Server.
 Für das Thema \ac{waf} speziell relevant sind \textbf{Reverse Proxies}.
 Ein Reverse Proxy befindet sich in einem privaten Netzwerk mit dem Ziel-Server, ist aber als einziger in diesem Netzwerk auch in der Lage mit einem öffentlichen Netz zu kommunizieren(Siehe Abbildung \ref{fig:revprox}).
-Eingehender Netzwerkverkehr wird Beispielsweise anhand der \ac{url} in einem HTTP-Paket an den zugeordneten Server weitergeleitet.
+Eingehender Netzwerkverkehr wird Beispielsweise anhand der \ac{url} in einem \ac{http}-Paket an den zugeordneten Server weitergeleitet.
 Der Proxy hält die Verbindung zu einem Client aktiv bis er eine Antwort vom Server erhält.
 Antwortet dieser ordnet der Reverse Proxy diese dem passenden Client zu, gibt die Antwort des Servers weiter und schließt die Verbindung zum Client.
 Transportverschlüsselung wird von dem Reverse Proxy vorgenommen.
@@ -32,6 +32,7 @@ Transportverschlüsselung wird von dem Reverse Proxy vorgenommen.
     \centering
     \includegraphics[width=0.9\textwidth]{./images/reverse-Proxy.png}
     \caption{Schematische Darstellung eines Reverse Proxies}
+    \floatfoot{Quelle: Eigene Darstellung}
     \label{fig:revprox}
 \end{figure}
 
