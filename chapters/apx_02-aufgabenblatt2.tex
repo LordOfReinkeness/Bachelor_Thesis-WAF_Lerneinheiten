@@ -1,1 +1,59 @@
+Sie haben sich im ersten Kapitel mit der Funktion der Laborumgebung vertraut gemacht und erste Regeln verfasst.
+Dieses Kapitel befasst sich nun mit den ersten Angriffen die in ähnlicher Form auch an öffentlich erreichbaren Servern beobachtet werden können.
+Im Folgenden werden Sie sich \textit{SQL-Injections} und \textit{Cross Site Scriptings (XSS)} genauer anschauen und WAF-Regeln für Angriffsszenarien im \textit{Juice Shop} schreiben, die diese in den Dort aufgeführten Fällen mittigieren.
+
+\subsection{SQL Injections}
+Die \href{https://portswigger.net/web-security/sql-injection/cheat-sheet}{SQL-Injection} ist eine sehr häufig auftretende Schwachstelle, die aus der unsauberen Weitergabe von Nutzerdaten an eine SQL Datenbank entstehen kann.
+
+\subsubsection{SQL-Login-Bypass}
+In der Challenge \glqq\href{https://pwning.owasp-juice.shop/companion-guide/latest/part2/injection.html#_log_in_with_the_administrators_user_account}{Log in with the administrator’s user account}\grqq\ kann die Passwort-Validierung bei einem Login umgangen werden.
+
+Vollziehen Sie das beschriebene Problem nach:
+\begin{itemize}
+    \item Was muss in der Login Maske angegeben werden, um als administrator eingeloggt zu werden?
+    \item Wie funktioniert der Login Prozess im Backend?
+    \item Überlegen Sie sich Funktionierende Abwandlungen des Befehls zum Login als Administrator.
+    \item Was haben diese Gemeinsam?
+\end{itemize}
+
+Schreiben Sie eine WAF-Regel, die es ermöglicht den Angriff zu verhindern, indem Anfragen die den Login Bypass enthalten, abgelehnt werden.
+Bedenken Sie, dass nicht nur ein Weg zu einer Ausnutzung führen kann.
+
+\subsubsection{SQL-Injections allgemein an drei Bespielen}
+
+Der Juice Shop bietet weitere Möglichkeiten für SQL injections.
+Zwei Beispiele sind die beiden Challenges \glqq\href{https://pwning.owasp-juice.shop/companion-guide/latest/part2/injection.html#_exfiltrate_the_entire_db_schema_definition_via_sql_injection}{\underline{database schema extraction}}\grqq\ und \glqq\href{https://pwning.owasp-juice.shop/companion-guide/latest/part2/injection.html#_log_in_with_benders_user_account}{log in with Bender’s user account}\grqq.
+
+\begin{itemize}
+    \item Welche SQL-Keywords werden in den Angriffen genutzt?
+    \item Welche Mutationen dieser Keywords können verwendet werden und der Angriff funktioniert immer noch?
+    \item Welche Probleme können Auftreten wenn die SQL-Keywords zu streng blockiert werden?
+\end{itemize}
+
+Schreiben sie eine Regel die beide Angriffe aus den Challenges anhand der SQL Keywords verhindern kann. 
+
+\subsection{Cross Site Scripting (XSS)}
+
+Cross Site Scripting (XSS) ist eine weiter Klasse an Angriffen die in der aktuellen Cybersicherheit eine große Rolle Spielen.
+Eine XSS-Schwachstelle zeichnet sich dadurch aus, dass Nutzereingaben die HTML, CSS oder JavaScript enthalten ausgeführt oder als Teil der Webseite dargestellt werden.
+
+\subsubsection{Reflected XSS}
+
+Die Challenge \glqq\href{https://pwning.owasp-juice.shop/companion-guide/latest/part2/xss.html#_perform_a_persisted_xss_attack_bypassing_a_server_side_security_mechanism}{Perform a persisted XSS attack bypassing a server-side security mechanism}\grqq\ enthält eine persistente XSS Schwachstelle.
+Das heißt ein in HTML eingebetteter JavaScript Code-Abschnitt kann auf dem Server gespeichert werden und wird bei Aufruf auf einem Beliebigen client ausgeführt.
+
+\begin{itemize}
+    \item Was macht eine XSS-Schwachstelle aus?
+    \item Können andere Elemente als \textit{iframes} und dem \textit{javascript:alert} genutzt werden?
+\end{itemize}\
+
+Schreiben Sie eine Regel die das Ausnutzen der Schwachstelle verhindert.
+Erweitern sie die Regel um eine Rewrite direktive, die den schadhaften Abschnitt aus der Anfrage entfernt sie aber an den Server weitergibt.
+
+\subsubsection{XSS Protection HTTP Headers}
+
+Neben dem erkennen von XSS durch einen WAF existieren den HTTP-Header \textit{X-XSS-Protection} der in Browsern eie XSS-Schutzfunktion aktiviert.
+
+Schreiben Sie eine Regel die in allen Antworten des JuiceShops diesen Header setzt.
+
 \pagebreak

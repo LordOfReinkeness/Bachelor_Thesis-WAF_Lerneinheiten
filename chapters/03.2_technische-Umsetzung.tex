@@ -1,15 +1,17 @@
 \subsubsection{Evaluation verfügbarer Produkte}
-\label{sec:produkt-eval}
+\label{sec:product-evaluation}
 
 \paragraph{Auswahl der \ac{waf}-Anwendung}
 
 
 \paragraph{Verwundbare Anwendungen}
 
+Neben einer 
+
 \subsubsection{Labor-Umgebung}
 
-Die in Kapitel \ref{sec:inhalte} beschriebenen Inhalte sollen in einem Praxisnahen Umfeld vermittelt werden.
-Dazu kommt nach den Abwägungen aus Kapitel \ref{sec:produkt-eval}, die \ac{waf} ModSecurity zum Einsatz.
+Die in Kapitel \ref{sec:learnings-metha} beschriebenen Inhalte sollen in einem Praxisnahen Umfeld vermittelt werden.
+Dazu kommt nach den Abwägungen aus Kapitel \ref{sec:product-evaluation}, die \ac{waf} ModSecurity zum Einsatz.
 Die zu diesem Zweck vorgesehene Laborumgebung muss einige Kriterien erfüllen:
 \begin{description}
     \item[Einheitliches Deployment:] Der Ausgangspunkt der Lerneinheiten muss reproduzierbar und wiederholbar sein. 
@@ -55,11 +57,11 @@ Wie in Abbildung \ref{fig:lab} dargestellt, werden in der Laborumgebung vier Con
     Auch diese Anwendung wird modifiziert.
     Es werden Daten hinterlegt und Nutzeraccounts angelegt.
     Diese ermöglichen es mittels eines automatischen Kontroll-Scripts die Konfiguration der \ac{waf} zu überprüfen.
-    Die genauen Änderungen werden in den Sub-Kapiteln von Kapitel \ref{sec:learnings} im Detail beschrieben.
+    Die genauen Änderungen werden in den Sub-Kapiteln von Kapitel \ref{sec:learning-unit} im Detail beschrieben.
 
     \item[Python Test-Script:] Dieser Container enthält ein Python Skript, das es den Lernenden mittels des Unittest-Frameworks \textit{Pytest} ermöglicht, die erarbeiteten Lösungen zu überprüfen.
     Das Skript schickt \ac{http}-Requests durch die \ac{waf} und evaluiert die Antworten, um den Lernenden Rückmeldung über den Erfolg ihrer Konfiguration zu geben.
-    Die jeweilige Funktion wird in den Sub-Kapiteln von Kapitel \ref{sec:learnings} im Detail beschrieben.
+    Die jeweilige Funktion wird in den Sub-Kapiteln von Kapitel \ref{sec:learning-unit} im Detail beschrieben.
 
     \item[Portainer:] Die Anwendung \textit{Portainer} ermöglicht es eine Docker Umgebung mittels einer Grafischen Oberfläche zu verwalten.
     In der Laborumgebung kann sie genutzt werden um die Laborumgebung zu bedienen ohne sich tiefer mit der Funktion von Docker auseinander setzen zu müssen.
@@ -97,7 +99,7 @@ Die Konfiguration der \ac{waf} findet in Textdateien statt, die sich in der Virt
 Der Zugriff auf diese ist mit dem Text-Editor Visual Studio Code der Firma Microsoft vorgesehen, da dieser eine SSH Erweiterung hat die es mit geringen Konfigurationsaufwand ermöglicht Dateien auf entfernten Servern oder in Virtuellen Maschinen zu bearbeiten.
 
 Die Nutzung der Laborumgebung werden durch diese Maßnahmen als einfach genug beurteilt um einen schnellen Einstieg zu ermöglichen.
-Die Konfigurationen, die vorgenommen werden müssen, werden in der ersten Lerneinheit (Kapitel \ref{sec:lerneinheit1}) beschrieben.
+Die Konfigurationen, die vorgenommen werden müssen, werden in der ersten Lerneinheit (Kapitel \ref{sec:learning-unit-1}) beschrieben.
 Es steht den Lernenden frei weitere oder andere als die beschriebenen Technologien zu verwenden, um mit der Laborumgebung zu interagieren.
 Diese können im Rahmen dieser Thesis und den Aufgabenstellungen jedoch nicht berücksichtigt werden.
 
