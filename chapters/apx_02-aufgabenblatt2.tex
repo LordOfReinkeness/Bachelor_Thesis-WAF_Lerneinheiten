@@ -16,8 +16,8 @@ Vollziehen Sie das beschriebene Problem nach:
     \item Was haben diese Gemeinsam?
 \end{itemize}
 
-Schreiben Sie eine WAF-Regel, die es ermöglicht den Angriff zu verhindern, indem Anfragen die den Login Bypass enthalten, abgelehnt werden.
-Bedenken Sie, dass nicht nur ein Weg zu einer Ausnutzung führen kann.
+\textbf{Schreiben Sie eine WAF-Regel, die es ermöglicht den Angriff zu verhindern, indem Anfragen die den Login Bypass enthalten, abgelehnt werden.
+Bedenken Sie, dass nicht nur ein Weg zu einer Ausnutzung führen kann.}
 
 \subsubsection{SQL-Injections allgemein an drei Bespielen}
 
@@ -30,7 +30,7 @@ Zwei Beispiele sind die beiden Challenges \glqq\href{https://pwning.owasp-juice.
     \item Welche Probleme können Auftreten wenn die SQL-Keywords zu streng blockiert werden?
 \end{itemize}
 
-Schreiben sie eine Regel die beide Angriffe aus den Challenges anhand der SQL Keywords verhindern kann. 
+\textbf{Schreiben sie eine Regel die beide Angriffe aus den Challenges anhand der SQL Keywords verhindern kann. }
 
 \subsection{Cross Site Scripting (XSS)}
 
@@ -47,13 +47,13 @@ Das heißt ein in HTML eingebetteter JavaScript Code-Abschnitt kann auf dem Serv
     \item Können andere Elemente als \textit{iframes} und dem \textit{javascript:alert} genutzt werden?
 \end{itemize}\
 
-Schreiben Sie eine Regel die das Ausnutzen der Schwachstelle verhindert.
-Erweitern sie die Regel um eine Rewrite direktive, die den schadhaften Abschnitt aus der Anfrage entfernt sie aber an den Server weitergibt.
+\textbf{Schreiben Sie eine Regel die das Ausnutzen der Schwachstelle verhindert.
+Erweitern sie die Regel um eine Rewrite direktive, die den schadhaften Abschnitt aus der Anfrage entfernt sie aber an den Server weitergibt.}
 
 \subsubsection{XSS Protection HTTP Headers}
 
 Neben dem erkennen von XSS durch einen WAF existieren den HTTP-Header \textit{X-XSS-Protection} der in Browsern eie XSS-Schutzfunktion aktiviert.
 
-Schreiben Sie eine Regel die in allen Antworten des JuiceShops diesen Header setzt.
+\textbf{Schreiben Sie eine Regel die in allen Antworten des JuiceShops diesen Header setzt.}
 
 \pagebreak

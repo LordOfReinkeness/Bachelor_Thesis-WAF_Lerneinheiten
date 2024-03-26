@@ -1,8 +1,186 @@
+Die in diesem Kapitel beschriebenen Lerneinheiten machen einen zentralen Bestandteil dieser Thesis aus.Sie ähneln sich in Aufbau und Durchführung, beschäftigen sich jedoch mit unterschiedlichen Aspekten einer \ac{waf}:
+Eine Aufgabe in einer Lerneinheit beginnt immer mit einigen Worten zu dem Thema mit dem sich die Lernenden beschäftigen sollen, gefolgt von einer Referenz auf eine Challenge aus dem Juice Shop die mit der \ac{waf} abgesichert werden soll.
+
+In diesem Kapitel wird beschrieben welche Überlegungen in die Konzeption der Lerneinheit geflossen sind.
+Mit welchem Überthema sich die jeweiligen Lerneinheiten beschäftigen, nach welchen Kriterien die Challenges des Juice Shops ausgewählt wurden und wie die Challenges gelöst werden können.
+
 \subsubsection{Teil 1: Erster Kontakt zu einer WAF}
-\label{sec:learning-unit-1}
+\label{sec:learning-unit-1-meta}
+
+In der Ersten Lerneinheit sollen sich die Lernenden mit der Laborumgebung vertraut machen.
+Erst sollen die Lernenden die Laborumgebung auf ihren Geräten einrichten und sich versichern, dass sie Zugriff auf alle Services der Umgebung haben.
+Dann gilt es ein Verständnis aufzubauen wie der Fluss einer \ac{http}-Anfrage durch die Netzwerke der Umgebung erfolgt.
+Den Lebenden sollte vor Beginn der Lerneinheit bekannt sein wie eine \ac{waf} in der Theorie vor eine Webanwendung platziert werden kann.\\
+
+Die Aufgabenstellungen zu der hier beschreiben Lerneinheit sind in Anhang \ref{sec:learning-unit-1} zu finden.\\
+
+\paragraph{Einrichtung der Laborumgebung}\ \\
+
+In der ersten Aufgabe (Anhang \ref{sec:learning-unit-1-preparations}) der Lerneinheit sollen die Lernenden die Laborumgebung installieren.
+Hierfür muss die Laborumgebungs \ac{vm} bereit gestellt werden.
+Die weiteren Anwendungen, die im Zuge der Durchführung benötigt werden, werden in der Aufgabenstellung genannt und die Konfiguration erläutert.
+Die Aufgabe besteht aus einer detailliert bebilderten Anleitung zum Aufsetzern der Laborumgebung.
+Die Bestandteile sind:
+
+\begin{enumerate}
+    \item Installation der \ac{vm}
+    \item Konfiguration eines virtuellen \textit{Host-Only} Netzwerkadapters um vom Host Betriebssystem auf die \ac{waf}-Laborumgebung zugreifen zu können.
+    \item Abrufen der Verfügbaren Webanwendungen
+    \item Verbinden mit der SSH-Schnittstelle um die \ac{waf} Konfiguration bearbeiten zu können.
+\end{enumerate}
+
+Die Anleitung ist mit dem Fokus auf einige vorgeschrieben Technologien verfasst.
+Es wird jedoch auch auf einer konzeptionellen beschreiben was zu tun ist.
+Lernende, die andere als die beschrieben Technologien nutzen möchten können dies tun, dies ist in der Konzeption der Laborumgebung berücksichtigt, wird in der Anleitung aber nicht genauer beschrieben.
+Lernende die sich dafür entscheiden müssen auftretende Probleme mit den von ihnen gewählten Technologien eigenständig und ohne Hilfe der Anleitung lösen.
+
+Nach Abschluss der Aufgabe sollen die Lernenden in der Lage sein die Laborumgebung zu nutzen um weitere Aufgaben lösen zu können.
+Die Lernenden müssen sich nur in geringem Maße neues Wissen erarbeiten, da die Anleitung sehr eng geführt ist.
+
+\paragraph{Erste Arbeit mit der WAF}\ \\
+
+In dieser Aufgabe in der sich die Lernenden das erste Mal mit \ac{waf}-Regeln beschäftigen.
+Für den Einstieg soll sich zuerst mit der Syntax der \textit{ModSecurity} Regeln anhand einfacher Beispiele beschäftigt werden.
+Hierfür werden Zwei Challenges des \textit{Juice Shops} herangezogen deren Lösungen ohne größere Probleme nachvollziehbar sind.
+In der Ersten dieser Aufgaben soll ein Pfad unzugänglich gemacht werden, auf dem sensitive Informationen preisgegeben werden.
+Die hierfür notwendige Regeln ist verhältnismäßig unkompliziert und kann beispielsweise wie Folgt aussehen:
+
+\begin{verbatim}
+SecRule REQUEST_URI "@streq /ftp/acquisitions.md" \
+    "id:1, \
+    msg:'Stop access to critical /ftp/aquisitions.md', \
+    deny, \
+    status:403"
+\end{verbatim}
+
+Der zweite Teil der Aufgabe erfordert es den Inhalt eines \ac{http}-Bodies zu Parsen und zu analysieren.
+Die zugehörige Challenge im \textit{Juice Shop} weist eine Schwachstelle auf in der Parameter im Backend nicht auf Gültigkeit geprüft werden.
+Dadurch können ungültig Daten an den Webserver übergeben werden, die dort gespeichert und von dort an Nutzer übergeben werden.
+Der Parameter \textit{rating}, der in einem JSON-Objekt im \ac{http}-Request Body transportiert wird soll nur die Werte 1 bis 5 annehmen können.
+
+Der schädliche Parameter kann auf mehreren wegen erkannt werden.
+Zwei Beispiele wären:\\
+
+Mithilfe eines regulären Ausdrucks ($[\land 1-5]$):
+\begin{verbatim}
+SecRule REQUEST_HEADERS:Content-Type "application/json" \
+    "phase:2, id:3, t:none, t:lowercase, \
+    log, ctl:requestBodyProcessor=JSON" \
+    chain, \
+    msg:'JSON parameter rating found in request body'"
+
+    SecRule REQUEST_BODY:rating "@rx [^1-5]" \
+        "id:4, phase:2, \
+        deny, log, status:403"
+\end{verbatim}
+
+
+Mithilfe von Vergleichsoperationen ($@gt 5$ und $@lt 1$):
+\begin{verbatim}
+SecRule REQUEST_HEADERS:Content-Type "application/json" \
+    "phase:2, id:3, t:none, t:lowercase, \
+    log, ctl:requestBodyProcessor=JSON" \
+    chain, \
+    msg:'JSON parameter rating found in request body'"
+    
+    SecRule ARGS:rating "@gt 5" \
+        "id:4, phase:2, \
+        deny, log, status:403"
+
+    SecRule ARGS:rating "@lt 1" \
+        "id:5, phase:2, \
+        deny, log, status:403"
+\end{verbatim}
+
+Diese Challenges sollen den Lernenden grundlegende Konzepte zum Aufbau einer \textit{ModSecurity} Regel beibringen:
+\begin{itemize}
+    \item Den grundlegenden Aufbau nach der Struktur
+    \begin{verbatim}
+        SecRule VARIABLE [OPERATOR] [TRANSFORMATIONS,ACTIONS]
+    \end{verbatim}
+    in der erst das Ziel der Operation (VARIABLE), dann die Matching-Operation (OPERATOR) und dann das Verfahren nach dem \textit{Match} (TRANSFORMATIONS,ACTIONS) beschrieben werden.
+    \item Das Prinzip des \textit{Multi Stage Processing}: Nicht die Ganze \ac{http}-Nachricht steht zur gleichen Zeit zur Verfügung. Der Zugriff auf ein JSON-Body element kann, wie in dem Beispiel oben, also erst nach vorherigem Parsing betrachtet werden.
+\end{itemize}
+
+Die beiden oben beschrieben Aufgaben sind gedacht um die \ac{waf} kennen zu lernen.
+Sie bilden jedoch kein Verhalten ab das in einer \ac{waf}-Regel einer produktiven \ac{waf} verwendet werden würde:
+Die Regeln sind viel zu detailliert und auf einen spezifischen Fall ausgerichtet.
+
 \subsubsection{Teil 2: Grundlegende Angriffe}
-\paragraph{SQL Injections}
-\paragraph{Cross Site Scripting (XSS)}
-\subsubsection{Teil3: Details und  Gefahren in der Nutzung einer WAF}
-\paragraph{Log Analyse}
-\paragraph{Filter evasion Taktiken}
+\label{sec:learning-unit-2-meta}
+
+Nachdem sich in der ersten Lerneinheit mit der Laborumgebung, der \ac{waf} und ihrer Funktion vertraut gemacht wurde, kann der Fokus in dieser zweiten Lerneinheit auf Angriffsszenarien gelegt werden.
+Die Lernenden beschäftigen sich exemplarisch mit zwei Angriffsszenarien, die in der aktuellen IT-Sicherheit und Verteidigung von Webanwendungen relevant sind.\\
+
+Die Aufgabenstellungen zu der hier beschreiben Lerneinheit sind in Anhang \ref{sec:learning-unit-2} zu finden.
+
+\paragraph{SQL Injections}\ \\
+Die SQL-Injection ist eine Angriffstechnik bei der Nutzereingaben direkt und ungefiltert an eine SQL-Datenbank im Backend weitergegeben werden.
+Dies kann zu unvorhergesehenen nebeneffekten wie Befehlsausführung auf dem Server und Daten-Exhilaration führen.
+Nach OWASP-top-ten gehören SQL Injections zu den zehn schwerwiegendsten Schwachstellen, die in Webanwendungen zu finden sind.
+
+Die Funktion und Verteidigung gegen SQL Injection Angriffe sollen Lernenden in dieser Aufgabe erarbeiten.
+Zuerst soll sich mit einer spezifischen Sicherheitslücke beschäftigt werden und diese mit einer eigenständigen \ac{waf}-Regel mittigiert werden.
+In einem zweiten Schritt wird einen SQL-Injection generell betrachtet.
+Hierfür sollen die Lernenden die Gemeinsamkeiten von zwei \textit{Juice Shop} Challenges herausarbeiten und beide Schwachstellen mit einer Regel mittigieren.
+
+Die erste Teilaufgabe beschäftigt sich mit einem SQL Login-Bypass.
+Zum Abgleich ob ein Nutzer existiert und das Passwort gültig ist wird im Backend die SQL-Datenbank genutzt.
+Ein Angreifer kann in dieser \textit{Juice Shop} Challenge an den Nutzernamen einen Vergleich in SQL Syntax anhängen und somit einen gültigen Login erzwingen ohne das Passwort eines Nutzers zu kennen.
+
+Um diesen Angriff erkennen zu können sollen sich die Lernenden auf escape syntax fokussieren, mit deren Hilfe ein SQL-Befehl beendet werden kann um danach eigene Befehle auszuführen.
+
+zwei Beispiel2 könnten wie Folgt aussehen:
+
+\begin{verbatim}
+SecRule ARGS:email "@rx ^['].*--" \ 
+    "id:6, phase:2, \
+    deny,log,status:401"
+
+SecRule ARGS:email "@rx ==\w*--" \
+    "id:7, phase:2, \
+    deny,log,status:401"
+\end{verbatim}
+
+In beiden Fällen wird nach dem Beginn eines SQL Kommentars gesucht.
+Die beiden dargestellten Möglichkeiten suchen vor dem Kommentar jedoch nach unterschiedlichen Angriffsmustern.
+Im ersten Beispiel werden Hochkommata gemacht, die in einer Mailadresse nicht vertreten sein sollten.
+Im zweiten Fall wird nach einem Vergleich ($==$) gesucht, der zwar theoretisch in einem nicht bösartigen Szenario vorkommen könnte, jedoch eher unwahrscheinlich ist und keine Einschränkung für Nutzer darstellen würde.
+
+Im Zweiten Teil der Aufgabe soll sich nun auf das generelle filtern von SQL-Syntax fokussiert werden.
+Die beiden Challenges die die Lernenden analysieren sollen weisen SQL-Injection Schwachstellen im HTTP-Body auf.
+Damit die Lernenden keine Regeln schreiben können, die sich nur auf einen spezifischen Fall beschränkt sollen die Lernenden eine Regel für beide Challenges schreiben.
+
+Ein Lösungsvorschlag für das generelle Erkennen einer SQL-INjection Attacke kann sein die sql keywords zu erkennen wie in dem folgenden regulären Ausdruck nachvollziehbar ist.
+
+\begin{verbatim}
+\s*(select|union|update|delete|insert|drop|--|or|and|alter|exec
+|create|script|table|from|where|join|having|cast)\s*
+\end{verbatim}
+
+Beim schreiben der Regel müssen die Lernenden darauf achten, dass die Regel keine unvorhergesehenen Nebeneffekte hat.
+Wird beispielsweise nur nach dem substring \verb|and| gefiltert, könnte ein Nutzer mit dem Namen \textit{Andy} Probleme bekommen die Webanwendung zu nutzen.\\
+
+
+Ist die Aufgabe abgeschlossen sollen die Lernenden ein Verständnis dafür haben wie eine SQL-Injection Funktioniert.
+Außerdem sollen sie durch das lösen von Problemen und betrachten der Logs herausgefunden haben, dass ein regulärer Ausdruck dessen Folgen nicht bedacht wurde Probleme bei der regulären Nutzung der Webanwendung hervorrufen kann.
+
+\paragraph{Cross Site Scripting (XSS)}\ \\
+
+Neben der \textit{SQL-Injection} nutzen Angreifer häufig sogenannte \ac{xss} Schwachstellen in Webanwendungen aus.
+Bei einem \ac{xss} ist es einem Angreifer möglich HTML und Java Scrip Code an die Webanwendungen zu übergeben sodass dieser von der Anwendung nicht als Text interpretiert wird sonder als Code Ausgeführt bzw. dargestellt wird.
+
+% TODO
+
+\begin{verbatim}
+SecRule RESPONSE_HEADERS:@streq 200 \
+   "id:10, phase:3, nolog, pass,\
+   hdrOut: Header set X-XSS-Protection '1; mode=block'"
+\end{verbatim}
+
+
+\subsubsection{Teil3: Nutzung einer WAF in produktivem Umfeld}
+\label{sec:learning-unit-3-meta}
+
+Die dritte Lerneinheit soll einen Fokus auf der Arbeit mit einer \ac{waf} in produktivem Umfeld Legen.
+Es soll die Arbeit mit 

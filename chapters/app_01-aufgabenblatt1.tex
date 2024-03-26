@@ -2,6 +2,7 @@ Mit dieser Laborumgebung soll die Funktion einer Web Application Firewall (WAF) 
 In dieser Lerneinheit sollen Sie sich mit der Lernumgebung vertraut machen und eine erste Konfiguration der WAF vornehmen.
 
 \subsection{Vorbereitungen}
+\label{sec:learning-unit-1-preparations}
 
 Um die Laborumgebung zu nutzen werden die Folgenden Anwendungen benötigt:
 \begin{itemize}
@@ -147,7 +148,7 @@ Visual Studio Code merkt sich die Konfiguration die bei wiederholtem Aufruf im \
 
 \subsection{Erste Konfiguration}
 
-Die Resourcen die Sie in der folgenden Liste finden, können Ihnen bei der Bearbeitung der Aufgabenstellungen behilflich sein.
+Die Ressourcen die Sie in der folgenden Liste finden, können Ihnen bei der Bearbeitung der Aufgabenstellungen behilflich sein.
 
 \begin{itemize}
     \item Das \href{https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v3.x)}{\underline{ModSecurity Refernece Manual}} besonders die  \href{https://coreruleset.org/docs/rules/creating/}{\underline{Anleitung zum Schreiben von Regeln}}
@@ -161,7 +162,7 @@ Um sich mit dem Aufbau einer ModSecurity Regel vertraut zu machen, soll der Zuga
 
 In der Challenge \glqq\href{https://pwning.owasp-juice.shop/companion-guide/latest/part2/sensitive-data-exposure.html#_access_a_confidential_document}{\underline{access a confidential document}}\grqq\ ist der Zugriff auf ein Dokument möglich.
 
-Schreiben Sie eine neue Regel, die den Zugriff auf dieses Dokument verhindert und mit dem HTTP-Fehlercode 401 antwortet.
+\textbf{Schreiben Sie eine neue Regel, die den Zugriff auf dieses Dokument verhindert und mit dem HTTP-Fehlercode 401 antwortet.}
 
 \subsubsection{Parsen von HTTP Parameter}
 In der Challenge \glqq\href{https://pwning.owasp-juice.shop/companion-guide/latest/part2/improper-input-validation.html#_give_a_devastating_zero_star_feedback_to_the_store}{\underline{give a devastating zero-star feedback to the store}}\grqq\ kann durch Bearbeiten eines HTTP-Requests ein Produkt mit 0 Sternen bewertet werden.
@@ -173,6 +174,6 @@ Vollziehen Sie das beschriebene Problem nach:
     \item Was wäre das korrekte Verhalten?
 \end{itemize}
 
-Wenn Sie die Schwachstelle verstanden haben, schreiben Sie eine weitere Regel, die verhindert, dass ein Angreifer keine Daten außer den gültigen Werten an den Endpoint senden kann.
+\textbf{Wenn Sie die Schwachstelle verstanden haben, schreiben Sie eine weitere Regel, die verhindert, dass ein Angreifer keine Daten außer den gültigen Werten an den Endpoint senden kann.}
 
 \pagebreak
