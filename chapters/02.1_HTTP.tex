@@ -1,4 +1,4 @@
-Das \ac{http} ist ein Protokoll das in der Internet-Kommunikation zum Einsatz kommt.
+Das \ac{http} ist ein Protokoll, das in der Internet-Kommunikation zum Einsatz kommt.
 Es dient zur Übertragung von Daten zwischen einem Client und einem Server und wird hauptsächlich zur Auslieferung beziehungsweise Bedienung von Webanwendungen genutzt.
 Seit der Einführung in 1991 wurde es in mehreren RFCs erweitert und ist inzwischen in Version drei\cite{onlineIETFErhebtHTTP2022}.\\
 
@@ -7,7 +7,7 @@ Ein Client beginnt die Kommunikation und fragt Daten oder Daten-Operationen an e
 Der Server beantwortet diese Anfrage\footnote{Im folgenden werden \ac{http}-Anfrage und das Englische \ac{http}-Request synonym verwendet. Das Gleiche gilt für \ac{http}-Antwort und \ac{http}-Response} und sendet dem Client Informationen wie die Verarbeitung erfolgt ist und die Angeforderten Daten.
 Diese Kommunikation erfolgt über TCP.
 Ist ein Request-Response Cycle abgeschlossen, wird die TCP-Verbindung gekappt und der Server kann keine weiteren Nachrichten an den Client schicken bis dieser eine neue Anfrage startet.
-Übertragen werden können Texte in diversen Formatierungen wie beispielsweise H\textit{TML-Dokument} oder \textit{JSON-Strings}, es ist jedoch auch möglich Binär-Daten wie \textit{Bilddateien} zu übertragen.
+Übertragen werden können Texte in diversen Formatierungen wie beispielsweise \textit{HTML-Dokument} oder \textit{JSON-Strings}, es ist jedoch auch möglich Binär-Daten wie \textit{Bilddateien} zu übertragen.
 HTML ist ein \textit{Plaintext}-Protokoll, die Kommunikation erfolgt unverschlüsselt.
 Außerdem ist \ac{http} Textbasiert, eine Nachricht wird in Textform übertragen und ist menschenlesbar.
 
@@ -61,7 +61,7 @@ In den beiden Fälle ist der Aufbau dieser Zeile unterschiedlich:
      \item[Status-Zeile:] Die Antwort auf einen Request beginnt mit einer Status-Zeile in einem eigenen Format, die wie die Request-Zeile aus drei Teilen besteht (siehe Abb. \ref{fig:http-statusline}).
      \begin{description}
           \item[Die \ac{http} Version] gibt, wie an dritter Stelle des \ac{http}-Requests, die \ac{http}-Version der Folgenden Nachricht an.
-          \item[Der Status Code] der durch einen dreistelligen Zahlencode angibt wie der Status der Verarbeitung eines Requests ist. 
+          \item[Der Status Code] ist ein dreistelliger Zifferncode, der eine Rückmeldung über die Verarbeitung des Request gibt. 
           Die erste Stelle Signalisiert grob von welcher Art das Ergebnis ist. 
           So steht zum Beispiel 2xx für eine Erfolgreiche Verarbeitung während 4xx auf einen Fehler auf Client-Seite hindeutet.
           Die zwei folgenden Stellen geben genauer Aufschluss wie der Status ist\cite{HTTPResponseStatus2023}.

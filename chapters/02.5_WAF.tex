@@ -26,7 +26,7 @@ Der in Abbildung \ref{fig:waf-porcess-flow} dargestellte Prozessablauf beschreib
 
 Das grundlegende Muster ist, dass einen Nachricht an der \ac{waf} eintrifft und von dieser an den Server weitergegeben wird.
 Dieser Verarbeitet die Anfrage und sendet seine Antwort an die \ac{waf} die die Antwort an den Client weiterleitet.
-Der Server kennt in diesem Muster den Client nicht.
+Es besteht keine dirkete Kommunikations-Verbindung zwischen Server und Client.
 Die \ac{waf} ordnet der Anfrage die zugehörige Antwort zu.
 Als schädlich erkannte Inhalte können sowohl in einer Anfrage als auch Antwort abgelehnt werden.
 Anstatt einer abgelehnten Nachricht kann eine \ac{waf} auch eine eigene Antwort an den Client senden.
@@ -112,13 +112,16 @@ Ist der Request Parsing Schritt abgeschlossen, liegt einen Nachricht in einer Fo
 
 \paragraph{Muster-Abgleich gegen Regeln}
 Die normalisierte Nachricht kann von der \ac{waf} nun auf schädliche Inhalte untersucht werden.
-In der Regel erfolgt das durch den Abgleich gegen eine Regel.
-Eine Regel besteht aus einem regulären Ausdruck und einem Set an Instruktionen wie mit der Nachricht, im Fall einer Übereinstimmung mit dem regulären Ausdruck, verfahren werden soll.
+üblicherweise erfolgt dies durch den Abgleich gegen eine Regel.
+Eine Solche besteht aus einem regulären Ausdruck und einem Set an Instruktionen wie mit der Nachricht, im Fall einer Übereinstimmung mit dem regulären Ausdruck, verfahren werden soll.
 Es ist möglich Nachrichten zu transformieren, beispielsweise können \ac{http}-header hinzugefügt oder modifiziert werden.
 Außerdem wird das weitere Verfahren definiert.
 
 \begin{description}
+    \item[reject] lehnt die Nachricht ab, es werden keine weiteren Überprüfungen durchgeführt und die Nachricht nicht weitergeleitet.
+    Die \ac{waf} Antwort dem client mit einer vordefinierten Antwort, die das Schließen der Verbindung begründet.
     \item[drop] lehnt die Nachricht ab, es werden keine weiteren Überprüfungen durchgeführt und die Nachricht nicht weitergeleitet.
+    Die \ac{waf} sendet dem Client keine Antwort und beendet die Kommunikation sofort.
     \item[pass] gibt die Nachricht weiter ohne weitere Überprüfungen durchzurühren.
     Ist eine Konfiguration nicht sorgfältig überprüft kann dies zu Einschränkungen in der Sicherheit einer \ac{waf} führen.
 \end{description}
@@ -126,7 +129,8 @@ Außerdem wird das weitere Verfahren definiert.
 In den Operationen können auch weitere Matching-Operationen definiert werden an die die Nachricht weitergeleitet werden soll.
 So kann die Menge an Regeln reduziert werden gegen die eine Nachricht überprüft werden muss.
 Es wird ein Baum an Regeln aufgebaut und nur die für eine Nachricht relevanten Checks ausgeführt.
-So muss beispielsweise nur dann wenn der \ac{http}-Header der signalisiert, dass der \ac{http}-Body JSON formatiert ist, eine Überprüfung durchgeführt werden ob es sich um gültiges JSON handelt.
+%So muss beispielsweise nur dann wenn der \ac{http}-Header der signalisiert, dass der \ac{http}-Body JSON formatiert ist, eine Überprüfung durchgeführt werden ob es sich um gültiges JSON handelt.
+Es muss beispielsweise nur geprüft werden ob ein JSON-Objekt in einem \ac{http}-Body gültig ist, wenn der zu schützende Endpoint JSON erwartet.
 
 Das Regelwerk einer \ac{waf} kann entweder durch \textit{White-} oder \textit{Blacklisting} erfolgen.
 Whitelisting ermöglicht es genau zu kontrollieren welche Anfragen an einen Server gestellt werden könne.

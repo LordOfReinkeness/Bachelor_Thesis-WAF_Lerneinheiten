@@ -32,15 +32,15 @@ Der Ablauf des Verbindungsaufbaus und Zustandekommen der Verschlüsselung die be
 
 Der Erste wichtige Vorgang ist das sich der Server, nachdem der Client eine Verbindung aufgebaut hat, mit einem TLS-Zertifikat bei den Client meldet.
 Der Client ist mit diesem Zertifikat in der Lage die Identität des Servers zu bestätigen.
-Dies erfolgt über eine Kette von Zertifikaten die sich gegenseitig bescheinigen authentisch zu sein.
+Dies erfolgt über eine Kette von Zertifikaten die sich hirarchisch bescheinigen authentisch zu sein.
 Die Mathematischen Prinzipien, die für dieses Verfahren notwendig sind sind für diese Thesis nicht relevant und werden nicht genauer betrachtet.
 Nachdem der Client die Identität des Servers bestätigt ist es laut Protokoll auch möglich, dass sich der Client mit dem gleichen Verfahren beim Server Authentifizieren kann, dies wird in der Realität jedoch äußerst selten vollzogen.\\
 
-Die beiden Kommunikationspartner haben sich nun gegenseitig ihre Identität versichert und können nun beginnen einen Schlüssel auszutauschen den beide nutzen können um verschlüsselt kommunizieren zu können.
+Hat der Server dem Client seine Identität bestätigt kann zwischen den Beiden einen Schlüssel ausgetauscht werden den beide Seiten nutzen können, um verschlüsselt kommunizieren zu können.
 Um dies zu erreichen ohne das eine etwaige dritte Person diesen Schlüssel Abhören und so die Kommunikation mitlesen kann erstellt der Client einen Schlüssel (shared Secret).
 Diesen übermittelt er dem Server asymmetrisch, mit dem öffentlich Schlüssel des Servers verschlüsselt.
 Das \textit{shared Secret} kann nun ausschließlich mit dem privaten Schlüssel des Servers geöffnet werden.
-Dieser Schlüsselaustausch kann auch mit den \textit{Diffie-Hellman} Verfahren ermittlet werden.
+Dieser Schlüsselaustausch kann auch mit den \textit{Diffie-Hellman} Verfahren ermittelt werden.
 Dies ist zum Zeitpunkt eher selten.
 
 Die Kommunikation zwischen Client und Server kann nun verschlüsselt stattfinden und nicht von einer dritten Person auf dem weg abgefangen und verstanden werden.

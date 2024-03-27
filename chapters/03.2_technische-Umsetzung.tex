@@ -145,7 +145,7 @@ Wie in Abbildung \ref{fig:lab} dargestellt, werden in der Laborumgebung vier Con
     Die grafische Oberfläche soll unter anderem genutzt werden um den \ac{waf}-Container nach einer Konfigurationsänderung neu zu starten und mit dem Test Skript zu interagieren. 
 \end{description}
 
-Aus den oben genannten Containern ergeben sich einige Netze, die im Hintergrund existieren müssen.
+Aus den oben genannten Containern ergibt sich eine Netzwerk-Architektur innerhalb der Umgebung, die entsprechend aufgebaut werden muss.
 So ist es notwendig, dass eine Verbindung von dem Python-Test-Container zur \ac{waf} und von dieser zum Juice Shop aufgebaut werden kann.
 Hierfür werden separate Docker-Netzwerke erstellt die an den Containern angeschlossen sind.
 Um den Nutzern eine Interaktion mit den Containern zu ermöglichen werden einige Ports aus der Docker-Umgebung freigegeben:
