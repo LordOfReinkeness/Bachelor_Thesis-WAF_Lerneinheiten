@@ -170,7 +170,30 @@ Außerdem sollen sie durch das lösen von Problemen und betrachten der Logs hera
 Neben der \textit{SQL-Injection} nutzen Angreifer häufig sogenannte \ac{xss} Schwachstellen in Webanwendungen aus.
 Bei einem \ac{xss} ist es einem Angreifer möglich HTML und Java Scrip Code an die Webanwendungen zu übergeben sodass dieser von der Anwendung nicht als Text interpretiert wird sonder als Code Ausgeführt bzw. dargestellt wird.
 
-% TODO
+In diesem Teil der Lerneinheit sollen sich die Lernenden mit der Funktion einer \ac{xss} Schwachstelle vertraut machen und daraus ableiten, wie ein solcher Angriff erkannt und verhindert werden kann.
+Des weiteren besitzen Browser Funktionen die das Ausnutzen eines \ac{xss} erschweren.
+Diese werden können in einem HTTP request durch das Setzen eines bestimmten Headers oder dem erstellen einer \textit{Content Security Policy} die festlegt von welchen Quellen Daten nachgeladen werden dürfen.
+Dies kann auch durch die \ac{waf} erfolgen.
+An diesem Beispiel ist es auch möglich das Umschreiben eines \ac{http}-Request durch die \ac{waf} zu übermitteln.
+
+Im ersten Teil der Aufgabe sollen die Lernenden eine \ac{waf}-Regel schreiben die in eingehendem Traffic ein HTML-Tag und javascript erkennt und Blockiert.
+Es existieren mehrere Möglichkeiten einen solchen Angriff zu erkennen und abzuwehren.
+Anhand der öffnenden und schließenden HTML-Tags oder dem \textit{javascript} Tag.
+Im folgenden beispiel ist eine Möglichkeit dies anhand der HTML \textit{script Tags} zu tun dargestellt:
+
+\begin{verbatim}
+    SecRule REQUEST_HEADERS:Content-Type "application/json \
+        [...]
+        SecRule ARGS: "@rx <script[^>]*>.*</script>|<[^>]+>" \
+        [...]
+\end{verbatim}
+
+Für eine allgemeine Lösungen nicht hinreichende, jedoch in dem spezifischen Fall der Übung gültige Lösung wäre das erkennen des javascript codes.
+Das Hierfür zum Testen genutzte \textit{javascript:alert} ist austauschbar und würde keinen zuverlässigen Schutz sorgen.
+
+Der Zweite Teil der Aufgabe beschäftigt sich mit dem mit dem setzen des \textit{X-XSS-Protection} Headers.
+Hierfür muss in einer Regel ausgehender Netzwerkverkehr erkannt werden.
+Anstatt diesen zu blockieren kann der Header gesetzt werde, wie im Folgenden Beispiel zu sehen ist:
 
 \begin{verbatim}
 SecRule RESPONSE_HEADERS:@streq 200 \
@@ -178,9 +201,15 @@ SecRule RESPONSE_HEADERS:@streq 200 \
    hdrOut: Header set X-XSS-Protection '1; mode=block'"
 \end{verbatim}
 
+Die Lernenden sollen nach Abschluss dieser Lerneinheit ein Verständnis für die Funktion eines \ac{xss} haben.
+Außerdem soll ein Bewusstsein für die Funktion der \ac{xss}-Protection Header bestehen, die einen wichtigen ersten Verteidigungsschritt gegen diese Angriffe darstellen.
+Neben dem Verständnis für den Angriff wird auch die Fähigkeit einer \ac{waf} den Netzwerkverkehr nicht nur zu bloc sonder auch umzuschreiben vermittelt.
 
 \subsubsection{Teil3: Nutzung einer WAF in produktivem Umfeld}
 \label{sec:learning-unit-3-meta}
 
 Die dritte Lerneinheit soll einen Fokus auf der Arbeit mit einer \ac{waf} in produktivem Umfeld Legen.
-Es soll die Arbeit mit 
+Die Lernenden sollen mit den Logdateien arbeiten um den Fehler in einer \ac{waf}-Regel zu finden.
+Außerdem ist vorgesehen, dass sich die Lernende mit Techniken der \textit{Filter evasion} beschäftigen, die ein Angreifer Nutzen könnte um nicht von den regulären Ausdrücken einer \ac{waf} erkannt zu werden.\\
+
+Im Rahmen der Thesis war es aus Zeitlichen gründen diese dritte Lerneinheit zu realisieren.

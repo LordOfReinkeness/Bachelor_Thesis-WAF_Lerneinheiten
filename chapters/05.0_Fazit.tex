@@ -1,0 +1,61 @@
+Der Bereich der Cybersicherheit oft als eine Einheit wahrgenommen wird besteht er heutzutage aus einer weiten Auswahl an Technologien und Spezialgebieten, die alle einen wichtigen Beitrag zum sicheren Betrieb von IT-Systemen leisten.
+Die Verschiedenen Felder benötigen alle qualifiziertes Fachpersonal um diese Sicherheit garantieren zu können.
+%ToDo
+Aus diesem Grund soll in dieser Thesis Lerneinheiten Entwickelt werden die in der Lehre eingesetzt werden kann um die Funktion einer \ac{waf} zu vermitteln.
+
+\subsection{Zusammenfassung}
+Das Ziel dieser Arbeit ist es Lerneinheiten zu erstellen mit deren Hilfe es Lernenden möglich ist einen Einblick in die Funktion einer \ac{waf} zu vermitteln.
+Die Lernenden sollen, nachdem sie die Lerneinheiten bearbeitet haben, ein Verständnis dafür haben wie eine \ac{waf} im Netzwerkverkehr zwischen Server und Client platziert ist um ihre Sicherheitsfunktion zu erfüllen.
+Es soll ein Tiefer Einblick in die Implementierung einer \ac{waf} vermitteln werden, besonders wie es mithilfe von Regeln möglich ist Netzwerkverkehr zu analysieren und schädliche Inhalte zu erkennen.
+Dadurch sollen die Lernenden ein Verständnis dafür erlagen welche gängige Taktiken Angreifer nutzen um Schwachstellen in Webanwendungen auszunutzen.
+Daraus soll sich das Wissen erarbeitet werden wie die Verteidigung gegen diese möglich ist.
+Des weiteren sollen die Lernenden einen Einblick erhalten wie der Einsatz einer \ac{waf} in produktivem Umfeld erfolgen.
+Die Lernenden sollen erfahren wie eine \ac{waf} in einem Netzwerk platziert wird um eine Webanwendung abzusichern und welche Tätigkeiten im betrieb einer \ac{waf} notwendig sind.
+
+Im Ramen dieser Thesis wurde eine Laborumgebung Implementiert in der Lernende Aufgaben erfüllen können.
+Anhand der Aufgaben wird den Lernenden aufeinander aufbauend die im vorherigen Abschnitt beschriebenen Inhalte vermittelt.
+Um eine Abschätzung wie Lernende mit der Laborumgebung interagieren und wie erfolgreich die vorgesehenen Inhalte übermittel werden, wurde eine Evaluation der Laborumgebung mit Probanden durchgeführt.\\
+
+Die Laborumgebung wird in Form einer Virtuellen Maschine ausgeliefert um die Durchführung möglichst Betriebssystem-Agnostisch zu ermöglichen.
+In der Laborumgebung werden einige Services in Form von Docker-Containern zur Verfügung Gestellt.
+Zum einen wird die verwundbare Webanwendung \textit{OWASP Juice Shop} betrieben.
+Dies ist eine Open Source Webanwendung die mit Absicht Sicherheitslücken enthält und zu Ausbildung von Sicherheitsexperten oder Sensibilisierung für Schwachstellen genutzt werden kann.
+Der zweite Service stellt mit der \ac{waf} \textit{ModSecurity} den Kern der Laborumgebung dar.
+Es handelt sich um eine Open Source Anwendung, aus der das gesamte Regelwerk entfernt ist.\\
+
+Die Lerneinheiten sind in drei Abschnitte unterteilt.
+Der erste Abschnitt führt Lernende in die Laborumgebung und die Arbeit mit dem \textit{ModSecurity} Regelwerk ein.
+Die Lernenden setzen angeleitet die Laborumgebung auf ihren Rechnern auf und interagieren mit den Services um ein Verständnis für die Umgebung bekommen.
+In dieser Lerneinheit soll ein erstes Verständnis für das Schreiben und die Syntax der \ac{waf}-Regeln aufgebaut werden.
+Nachdem sich die Lernenden mit der Laborumgebung vertraut gemacht haben, kann in der zweiten Lerneinheit begonnen werden angriffe zu Verstehen und abzuwehren.
+Dies wird exemplarisch an den beiden Schwachstellen-Kategorien \textit{SQL-Injection} und \textit{Cross Site Scripting} durchgeführt.
+Es wird erst exemplarisch auf einzelne Schwachstellen im \textit{Juice Shop} verwiesen, anhand derer in die Funktion der Angriffe eingeführt wird und Regeln zum expliziten mittigieren dieses einen Angriffs verfasst.
+Danach sollen die Schwachstellen allgemein betrachtet werden und anhand von einer Auswahl an Schwachstellen ein Schutz mithilfe einer Einzelnen Regel erstellt werden.
+Nach dem Verständnis für angriffe wird in der dritten Lerneinheit der Blick auf erweiterte Techniken und die Arbeit mit einer \ac{waf} gewendet.
+Die Lernenden sollen sich in dieser Lerneinheit mit dem Härten von Filterregel beziehungsweise dem Umgehen von Filterregeln beschäftigen.
+Des Weiteren soll mit den Log-Dateien gearbeitet werden um Fehler in der Konfiguration einer \ac{waf} aufzuspüren und diese zu Reparieren.
+Im Ramen der Thesis war es aus zeitlichen Gründen nicht möglich diese Dritte Lerneinheit zu realisieren.\\
+
+Die Laborumgebung wurde nach erstellen mit der Hilfe von Probanden Evaluiert um des Einsatz mit Lernenden Einschätzen zu können.
+Ergebnisse sind zum einen, dass für die Durchführung ein Vorwissen in den Bereichen Reguläre Ausdrücke, der Funktion des \ac{http}-Protokolls und der Datenbanksprache SQL nötig sind.
+Die Durchführung der Lerneinheiten kann von einem Lernenden in Ungefähr acht Arbeitsstunden erfolgen.
+Von der Dauer her ist also ein Einsatz im Ramen einer Vorlesung möglich.
+
+\subsection{Ausblick}
+
+Diese Arbeit bietet einige Möglichkeiten weitere Überlegungen anzustellen und Erweiterungen vorzunehmen.
+
+Zum Einen ist es für die tatsächliche Nutzung in der Lehre notwendig die Dritte und fehlende Lerneinheit zu Implementieren um die vorgesehene Lernerfahrung bieten zu können.
+Es ließe sich beispielsweise den Lernenden ein Regelsatz für eine bestimmte Schwachstelle des \textit{Juice Shops} zur Verfügung stellen.
+Diese Regelsatz müsste so gestaltet sein, dass die Funktion die eigentlich an dieser Stelle steht nicht verfügbar ist und nur durch das Umschreiben der Regeln ermöglicht werden kann.
+
+Neben den fehlenden Inhalten existieren einige Punkte in denen noch weitere Arbeit betrieben werden kann um den Lernerfolg oder die Arbeit mit der Laborumgebung zu optimieren.
+Als Teil der Laborumgebung ist es möglich einen Service zu Implementieren der den Lernenden mittels \ac{http}-Anfragen und Analyse der Antworten rückmeldung über die Qualität der erstellten Regeln geben kann.
+Die Umsetzung eines solchen Services war als Teil der Laborumgebung geplant, in der vorgegebenen Zeit lies sich dies jedoch nicht zuverlässig Implementieren.
+Die rückmeldung an die Lernenden war nicht von einer nutzbaren Qualität.
+
+Weiter Überlegungen können außerdem zur Bewertung der Ergebnisse angestellt werden.
+Kann die Laborumgebung prozedural so generiert werden, dass es möglich ist zu erkennen ob die Lernenden ihre Lösungen untereinander getauscht haben.
+Dies wäre beispielsweise durch individuelle Aufgabenzuteilung möglich, sodass jeder Lernenden individuelle aufgaben hat.
+
+%% automatische eval
