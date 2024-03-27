@@ -13,7 +13,7 @@
 %         - Vordefiniertes Regelwerk
 \label{sec:waf-theory}
 Ein \ac{waf} ist eine Sicherheits-Applikation, die in der Lage ist den Datenverkehr zu und von einer Webanwendung zu Analysieren.
-Hierbei werden die Übertragenen Inhalte in der Tiefe auf schädliche Inhalte überprüft.
+Hierbei werden die übertragenen Inhalte in der Tiefe auf schädliche Inhalte überprüft.
 Der in Abbildung \ref{fig:waf-porcess-flow} dargestellte Prozessablauf beschreibt wie eine \ac{waf} Nachrichten verarbeitet.
 
 \begin{figure}[!hbt]
@@ -25,8 +25,8 @@ Der in Abbildung \ref{fig:waf-porcess-flow} dargestellte Prozessablauf beschreib
 \end{figure}
 
 Das grundlegende Muster ist, dass einen Nachricht an der \ac{waf} eintrifft und von dieser an den Server weitergegeben wird.
-Dieser Verarbeitet die Anfrage und sendet seine Antwort an die \ac{waf} die die Antwort an den Client weiterleitet.
-Es besteht keine dirkete Kommunikations-Verbindung zwischen Server und Client.
+Dieser verarbeitet die Anfrage und sendet seine Antwort an die \ac{waf} die die Antwort an den Client weiterleitet.
+Es besteht keine direkte Kommunikations-Verbindung zwischen Server und Client.
 Die \ac{waf} ordnet der Anfrage die zugehörige Antwort zu.
 Als schädlich erkannte Inhalte können sowohl in einer Anfrage als auch Antwort abgelehnt werden.
 Anstatt einer abgelehnten Nachricht kann eine \ac{waf} auch eine eigene Antwort an den Client senden.
@@ -59,19 +59,19 @@ Aber auch Datentransferprotokolle wie FTP sind im Funktionsumfang einer \ac{waf}
 
 Da es sich bei \ac{http} und auch FTP um plaintext Protokolle handelt, bei denen der Datentransport in einer menschenlesbarer Form erfolgt, unterscheidet sich die Funktion einer \ac{waf} grundsätzlich von der einer Firewall.
 Die Erkennung schädlicher Inhalte erfolgt aufgrund von Regeln, die Muster beschreiben die auf diese hindeuten.
-In der Implementierung wird dies in der Regel durch die Verwendung Regulärer Ausdrücke realisiert, diese bilden Muster ab die mit den Inhalten des Datenverkehrs abgeglichen werden.
+In der Implementierung wird dies in der Regel durch die Verwendung regulärer Ausdrücke realisiert, diese bilden Muster ab die mit den Inhalten des Datenverkehrs abgeglichen werden.
 Eine \ac{waf} muss jedes Datenpaket mit einer Anzahl von Regeln in der Größenordnung mehrerer hunderttausend bis Millionen Regeln abgleichen.
-Der Rechenaufwand kann zwar durch optimierte regex-Engines oder Tree-Pruning-Algorithmen die irrelevante Überprüfungspfade erkennen, verringert werden.
+Der Rechenaufwand kann zwar durch optimierte Engines zur Auswertung regulärer Ausdrücke oder Tree-Pruning-Algorithmen die irrelevante Überprüfungspfade erkennen, verringert werden.
 Jedoch ist der Rechenaufwand in einer \ac{waf} relativ hoch und die Hardware Anforderungen an eine \ac{waf} groß.
 Auch muss bei einer vorgeschalteten \ac{waf} mit erhöhten Antwortzeiten gerechnet werden, die sich im Millisekunden Bereich befinden.
 
 Da es im Aktuellen stand der Technik üblich ist Internet-Datenübertragung zu verschlüsseln, muss eine \ac{waf} in der Lage sein die verschlüsselte Kommunikation zu öffnen um so die Inhalte analysieren zu können. %% Nicht Öffnen Terminieren
-Die SSL Verschlüsselung des \ac{https} Protokolls wird also an der \ac{waf} terminiert.
+Die SSL Verschlüsselung von \ac{https} wird also an der \ac{waf} terminiert.
 Die Kommunikation zwischen Server \textit{hinter} der \ac{waf} und der \ac{waf} selber kann entweder unverschlüsselt oder mit einem separaten Satz Zertifikate erfolgen.
 Die \ac{waf} verschlüsselt die Kommunikation nach der Verarbeitung wieder um sie an den Server weiterzugeben.
-Die Abwägung ob in der \ac{dmz} verschlüsselt kommuniziert wird muss anhand von Compliance-Gesichtspunkten und der vertrauenswürdigkeit der Umgebung erfolgen\cite{guptaWEBAPPLICATIONFIREWALL2007}.%% CLoud waf notwendig
+Die Abwägung ob in der \ac{dmz} verschlüsselt kommuniziert wird muss anhand von Compliance-Gesichtspunkten und der Vertrauenswürdigkeit der Umgebung erfolgen\cite{guptaWEBAPPLICATIONFIREWALL2007}.%% CLoud waf notwendig
 
-\subsubsection{Verarbeitung einer Anfrage}\cite{yuanResearchImplementationWEB2019}
+\subsubsection{Verarbeitung einer Anfrage}
 Der Zentrale Punkt, der in der der Thesis anhängenden Laborumgebung vermittelt werden soll, ist die Verarbeitung von Daten durch eine \ac{waf}.
 In dem folgend Anschnitt wird beschreiben wie eine \ac{waf} konzeptionell implementiert ist um diese Aufgabe auszuführen.
 Da die meisten Kommerziell erhältlichen \acp{waf} proprietäre Anwendungen sind, die keine Einsicht auf den Quellcode ermöglichen, basiert diese Beschreibung hauptsächlich auf der, als \textit{Open-Source} Anwendung vertriebenen \ac{waf}, \textit{ModSecurity}.
@@ -79,13 +79,15 @@ Da jedoch ein großer Teil der kommerziellen Anwendungen auf \textit{ModSecurity
 
 Die Verarbeitung in einer \ac{waf} erfolgt in vier Schritten. Der Fokus der Beschreibung liegt auf der Verarbeitung eines HTTP Requests.
 
+Das folgende Kapitel basiert zu großen Teilen auf Artikel \cite{yuanResearchImplementationWEB2019}.
+
 \paragraph{Request Parsing}
 Das Request Parsing ist der erste Schritt nach dem Eintreffen einer Nachricht an einer \ac{waf}.
 Vor diesem Schritt ist etwaige Verschlüsselung schon geöffnet, die Nachricht liegt in \ac{http}-Form vor.
 Die Felder der \ac{http}-Nachricht werden nun ausgelesen und in ein Format überführt, das eine standardisierte Verarbeitung durch die \ac{waf} ermöglicht.
 In dieser Form besteht jedoch immer noch eine gewisse Ambiguität in der Nachricht, die in einem Angriff genutzt werden könnte.
 Deswegen muss einen Normalisierung der Felder erfolgen,
-In Abbildung \ref{fig:norming} sind die Charakteristiken die Normalisiert werden schematisch dargestellt.
+In Abbildung \ref{fig:norming} sind die Charakteristiken die normalisiert werden schematisch dargestellt.
 
 \begin{figure}[!hbt]
     \centering
@@ -95,9 +97,9 @@ In Abbildung \ref{fig:norming} sind die Charakteristiken die Normalisiert werden
     \label{fig:norming}
 \end{figure}
 
-Normalisiert werden muss zum Einen die Zeichendarstellung.
+Normalisiert werden muss zum einen die Zeichendarstellung.
 Die Nachricht muss in ein einheitliches Encoding überführt werden, außerdem müssen \textit{URL-Encodings} aufgelöst werden.
-Hier werden Sonderzeichen mit drei bytes dargestellt:
+Hier werden Sonderzeichen mit drei Bytes dargestellt:
 Das erste Zeichen ist immer ein \verb|%| gefolgt von einer Zahl in hexadezimaler Darstellung die das Zeichen repräsentiert.
 Das \verb|@|-Zeichen wird von \verb|%40| repräsentiert.
 Soll das Zeichen \verb|%| selber dargestellt werden muss dies mit \verb|%25| codiert werden.
@@ -106,15 +108,15 @@ Ein \textit{Null Byte} ist kein darstellbares Zeichen, das aber jeh nach Umfeld 
 Alle oben genannten Techniken können genutzt werden um nicht von regulären Ausdrücken erkannt werden zu können.
 
 Eine weitere Gruppe von Normalisierungsoperationen sind Pfad-Normalisierungen.
-Sollen Pfade nicht Normalisiert werden kann ein Angreifer Zugriff auf Verzeichnisse erlangen, die nicht zugänglich sein sollten.
+Werden Pfade nicht normalisiert, kann ein Angreifer Zugriff auf Verzeichnisse erlangen, die nicht zugänglich sein sollten.
 
-Ist der Request Parsing Schritt abgeschlossen, liegt einen Nachricht in einer Form vor, die eine Einheitliche Analyse ermöglicht.
+Ist der Request Parsing Schritt abgeschlossen, liegt einen Nachricht in einer Form vor, die eine einheitliche Analyse ermöglicht.
 
 \paragraph{Muster-Abgleich gegen Regeln}
 Die normalisierte Nachricht kann von der \ac{waf} nun auf schädliche Inhalte untersucht werden.
 üblicherweise erfolgt dies durch den Abgleich gegen eine Regel.
 Eine Solche besteht aus einem regulären Ausdruck und einem Set an Instruktionen wie mit der Nachricht, im Fall einer Übereinstimmung mit dem regulären Ausdruck, verfahren werden soll.
-Es ist möglich Nachrichten zu transformieren, beispielsweise können \ac{http}-header hinzugefügt oder modifiziert werden.
+Es ist möglich, Nachrichten zu transformieren, beispielsweise können \ac{http}-Header hinzugefügt oder modifiziert werden.
 Außerdem wird das weitere Verfahren definiert.
 
 \begin{description}
@@ -137,16 +139,16 @@ Whitelisting ermöglicht es genau zu kontrollieren welche Anfragen an einen Serv
 Der daraus resultierende Konfigurationsaufwand für eine*n \ac{waf}-Consultant*in ist jedoch im Vergleich zu Blacklisting höher.
 Blacklisting hingegen ermöglicht bei unsicherer Konfiguration, dass das Umgehen der \ac{waf} deutlich einfacher möglich ist.\\
 
-Neben Regelbasiertem erkennen schädlicher Inhalte bieten einige \acp{waf} Signatur basierte Verfahren an wie sie beispielsweise auc in einem Virenscanner genutzt werden.
+Neben regelbasierter Erkennung schädlicher Inhalte bieten einige \acp{waf} Signatur basierte Verfahren an wie sie beispielsweise auch in einem Virenscanner genutzt werden.
 Diese werden im Rahmen dieser Thesis jedoch nicht genauer betrachtet.
 
 \paragraph{Logging}
-Ein Weiterer Schritt in der Verarbeitung einer Nachricht ist das Logging.
+Ein weiterer Schritt in der Verarbeitung einer Nachricht ist die Protokollierung, das sogenannte Logging.
 Dies ist zur Nachvollziehbarkeit der Operation einer WAF wichtig und ermöglicht es die Qualität der Konfiguration der \ac{waf} zu beurteilen.
 Aber auch nach einem erfolgreichen Angriff nachvollziehen wie dieser erfolgt ist und eventuell Schlüsse auf den Verursacher zuzulassen.
 
 \paragraph{Weiteres Vorgehen}
-Ist die Bearbeitung durch die \ac{waf} erfolgt muss die Nachricht wieder in ein verständliches \ac{http} überführt werden.
+Ist die Bearbeitung durch die \ac{waf} erfolgt, muss die Nachricht wieder in ein verständliches \ac{http} überführt werden.
 Etwaige Änderungen an der Nachricht die durch die \ac{waf} durchgeführt werden müssen übernommen werden.
 Des Weiteren muss etwaige Transportsicherheit auf dem Weg zum Ziel wieder angewendet werden.\\
 

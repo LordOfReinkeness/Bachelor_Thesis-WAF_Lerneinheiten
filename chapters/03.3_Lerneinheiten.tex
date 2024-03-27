@@ -1,25 +1,25 @@
-Die in diesem Kapitel beschriebenen Lerneinheiten machen einen zentralen Bestandteil dieser Thesis aus.Sie ähneln sich in Aufbau und Durchführung, beschäftigen sich jedoch mit unterschiedlichen Aspekten einer \ac{waf}:
+Die in diesem Kapitel beschriebenen Lerneinheiten machen in der praktischen Arbeit einen zentralen zentralen Bestandteil dieser Thesis aus.Sie ähneln sich in Aufbau und Durchführung, beschäftigen sich jedoch mit unterschiedlichen Aspekten einer \ac{waf}:
 Eine Aufgabe in einer Lerneinheit beginnt immer mit einigen Worten zu dem Thema mit dem sich die Lernenden beschäftigen sollen, gefolgt von einer Referenz auf eine Challenge aus dem Juice Shop die mit der \ac{waf} abgesichert werden soll.
 
 In diesem Kapitel wird beschrieben welche Überlegungen in die Konzeption der Lerneinheit geflossen sind.
-Mit welchem Überthema sich die jeweiligen Lerneinheiten beschäftigen, nach welchen Kriterien die Challenges des Juice Shops ausgewählt wurden und wie die Challenges gelöst werden können.
+Mit welchem Oberthema sich die jeweiligen Lerneinheiten beschäftigen, nach welchen Kriterien die Challenges des Juice Shops ausgewählt wurden und wie die Challenges gelöst werden können.
 
 \subsubsection{Teil 1: Erster Kontakt zu einer WAF}
 \label{sec:learning-unit-1-meta}
 
-In der Ersten Lerneinheit sollen sich die Lernenden mit der Laborumgebung vertraut machen.
+In der ersten Lerneinheit sollen sich die Lernenden mit der Laborumgebung vertraut machen.
 Erst sollen die Lernenden die Laborumgebung auf ihren Geräten einrichten und sich versichern, dass sie Zugriff auf alle Services der Umgebung haben.
 Dann gilt es ein Verständnis aufzubauen wie der Fluss einer \ac{http}-Anfrage durch die Netzwerke der Umgebung erfolgt.
-Den Lebenden sollte vor Beginn der Lerneinheit bekannt sein wie eine \ac{waf} in der Theorie vor eine Webanwendung platziert werden kann.\\
+Den Lernenden sollte vor Beginn der Lerneinheit bekannt sein wie eine \ac{waf} in der Theorie vor eine Webanwendung platziert werden kann.\\
 
-Die Aufgabenstellungen zu der hier beschreiben Lerneinheit sind in Anhang \ref{sec:learning-unit-1} zu finden.\\
+Die eigentlichen Aufgabenstellungen zu der hier beschrieben Lerneinheit sind in Anhang \ref{sec:learning-unit-1} zu finden.\\
 
 \paragraph{Einrichtung der Laborumgebung}\ \\
 
 In der ersten Aufgabe (Anhang \ref{sec:learning-unit-1-preparations}) der Lerneinheit sollen die Lernenden die Laborumgebung installieren.
-Hierfür muss die Laborumgebungs \ac{vm} bereit gestellt werden.
+Hierfür muss die die \ac{vm} der Laborumgebung bereit gestellt werden.
 Die weiteren Anwendungen, die im Zuge der Durchführung benötigt werden, werden in der Aufgabenstellung genannt und die Konfiguration erläutert.
-Die Aufgabe besteht aus einer detailliert bebilderten Anleitung zum Aufsetzern der Laborumgebung.
+Die Aufgabe besteht aus einer detailliert bebilderten Anleitung zum Aufsetzen der Laborumgebung.
 Die Bestandteile sind:
 
 \begin{enumerate}
@@ -29,19 +29,20 @@ Die Bestandteile sind:
     \item Verbinden mit der SSH-Schnittstelle um die \ac{waf} Konfiguration bearbeiten zu können.
 \end{enumerate}
 
-Die Anleitung ist mit dem Fokus auf einige vorgeschrieben Technologien verfasst.
-Es wird jedoch auch auf einer konzeptionellen beschreiben was zu tun ist.
-Lernende, die andere als die beschrieben Technologien nutzen möchten können dies tun, dies ist in der Konzeption der Laborumgebung berücksichtigt, wird in der Anleitung aber nicht genauer beschrieben.
+Die Anleitung ist mit dem Fokus auf einige notwendige und empfohlene Technologien verfasst.
+Es wird nur die gängigste Methode beschrieben die Laborumgebung aufzusetzen: Windows und VirtualBox.
+Es wird jedoch auch auf einer konzeptionellen Ebene beschrieben, was zu tun ist.
+Lernende, die andere als die beschrieben Technologien nutzen möchten, können dies tun, dies ist in der Konzeption der Laborumgebung berücksichtigt, wird in der Anleitung aber nicht genauer beschrieben.
 Lernende die sich dafür entscheiden müssen auftretende Probleme mit den von ihnen gewählten Technologien eigenständig und ohne Hilfe der Anleitung lösen.
 
-Nach Abschluss der Aufgabe sollen die Lernenden in der Lage sein die Laborumgebung zu nutzen um weitere Aufgaben lösen zu können.
+Nach Abschluss der Aufgabe müssen die Lernenden in der Lage sein, die Laborumgebung zu nutzen um weitere Aufgaben zu lösen.
 Die Lernenden müssen sich nur in geringem Maße neues Wissen erarbeiten, da die Anleitung sehr eng geführt ist.
 
 \paragraph{Erste Arbeit mit der WAF}\ \\
 
 In dieser Aufgabe in der sich die Lernenden das erste Mal mit \ac{waf}-Regeln beschäftigen.
 Für den Einstieg soll sich zuerst mit der Syntax der \textit{ModSecurity} Regeln anhand einfacher Beispiele beschäftigt werden.
-Hierfür werden Zwei Challenges des \textit{Juice Shops} herangezogen deren Lösungen ohne größere Probleme nachvollziehbar sind.
+Hierfür werden zwei Challenges des \textit{Juice Shops} herangezogen deren Lösungen ohne größere Probleme nachvollziehbar sind.
 In der Ersten dieser Aufgaben soll ein Pfad unzugänglich gemacht werden, auf dem sensitive Informationen preisgegeben werden.
 Die hierfür notwendige Regeln ist verhältnismäßig unkompliziert und kann beispielsweise wie Folgt aussehen:
 
@@ -53,44 +54,45 @@ SecRule REQUEST_URI "@streq /ftp/acquisitions.md" \
     status:403"
 \end{verbatim}
 
-Der zweite Teil der Aufgabe erfordert es den Inhalt eines \ac{http}-Bodies zu Parsen und zu analysieren.
-Die zugehörige Challenge im \textit{Juice Shop} weist eine Schwachstelle auf in der Parameter im Backend nicht auf Gültigkeit geprüft werden.
+Der zweite Teil der Aufgabe erfordert es, den Inhalt eines \ac{http}-Bodies zu parsen und zu analysieren.
+Die zugehörige Challenge im \textit{Juice Shop} weist eine Schwachstelle auf, in der Parameter im Backend nicht auf Gültigkeit geprüft werden.
 Dadurch können ungültig Daten an den Webserver übergeben werden, die dort gespeichert und von dort an Nutzer übergeben werden.
 Der Parameter \textit{rating}, der in einem JSON-Objekt im \ac{http}-Request Body transportiert wird soll nur die Werte 1 bis 5 annehmen können.
 
-Der schädliche Parameter kann auf mehreren wegen erkannt werden.
+Der schädliche Parameter kann auf unterschiedlichen Wegen erkannt werden.
 Zwei Beispiele wären:\\
 
-Mithilfe eines regulären Ausdrucks ($[\land 1-5]$):
-\begin{verbatim}
-SecRule REQUEST_HEADERS:Content-Type "application/json" \
-    "phase:2, id:3, t:none, t:lowercase, \
-    log, ctl:requestBodyProcessor=JSON" \
-    chain, \
-    msg:'JSON parameter rating found in request body'"
-
-    SecRule REQUEST_BODY:rating "@rx [^1-5]" \
-        "id:4, phase:2, \
-        deny, log, status:403"
-\end{verbatim}
-
-
-Mithilfe von Vergleichsoperationen ($@gt 5$ und $@lt 1$):
-\begin{verbatim}
-SecRule REQUEST_HEADERS:Content-Type "application/json" \
-    "phase:2, id:3, t:none, t:lowercase, \
-    log, ctl:requestBodyProcessor=JSON" \
-    chain, \
-    msg:'JSON parameter rating found in request body'"
+\begin{itemize}
+    \item Mithilfe eines regulären Ausdrucks ($[\land 1-5]$):
+    \begin{verbatim}
+    SecRule REQUEST_HEADERS:Content-Type "application/json" \
+        "phase:2, id:3, t:none, t:lowercase, \
+        log, ctl:requestBodyProcessor=JSON" \
+        chain, \
+        msg:'JSON parameter rating found in request body'"
     
-    SecRule ARGS:rating "@gt 5" \
-        "id:4, phase:2, \
-        deny, log, status:403"
+        SecRule REQUEST_BODY:rating "@rx [^1-5]" \
+            "id:4, phase:2, \
+            deny, log, status:403"
+    \end{verbatim}
 
-    SecRule ARGS:rating "@lt 1" \
-        "id:5, phase:2, \
-        deny, log, status:403"
-\end{verbatim}
+    \item Mithilfe von Vergleichsoperationen (\textit{@gt 5} und \textit{@lt 1}):
+    \begin{verbatim}
+    SecRule REQUEST_HEADERS:Content-Type "application/json" \
+        "phase:2, id:3, t:none, t:lowercase, \
+        log, ctl:requestBodyProcessor=JSON" \
+        chain, \
+        msg:'JSON parameter rating found in request body'"
+        
+        SecRule ARGS:rating "@gt 5" \
+            "id:4, phase:2, \
+            deny, log, status:403"
+    
+        SecRule ARGS:rating "@lt 1" \
+            "id:5, phase:2, \
+            deny, log, status:403"
+    \end{verbatim}
+\end{itemize}
 
 Diese Challenges sollen den Lernenden grundlegende Konzepte zum Aufbau einer \textit{ModSecurity} Regel beibringen:
 \begin{itemize}
@@ -99,10 +101,10 @@ Diese Challenges sollen den Lernenden grundlegende Konzepte zum Aufbau einer \te
         SecRule VARIABLE [OPERATOR] [TRANSFORMATIONS,ACTIONS]
     \end{verbatim}
     in der erst das Ziel der Operation (VARIABLE), dann die Matching-Operation (OPERATOR) und dann das Verfahren nach dem \textit{Match} (TRANSFORMATIONS,ACTIONS) beschrieben werden.
-    \item Das Prinzip des \textit{Multi Stage Processing}: Nicht die Ganze \ac{http}-Nachricht steht zur gleichen Zeit zur Verfügung. Der Zugriff auf ein JSON-Body element kann, wie in dem Beispiel oben, also erst nach vorherigem Parsing betrachtet werden.
+    \item Das Prinzip des \textit{Multi Stage Processing}: Nicht die ganze \ac{http}-Nachricht steht zur gleichen Zeit zur Verfügung. Der Zugriff auf ein JSON-Body Element kann, wie in dem Beispiel oben, also erst nach vorherigem Parsing betrachtet werden.
 \end{itemize}
 
-Die beiden oben beschrieben Aufgaben sind gedacht um die \ac{waf} kennen zu lernen.
+Die beiden oben beschrieben Aufgaben sind gedacht, um die \ac{waf} kennen zu lernen.
 Sie bilden jedoch kein Verhalten ab das in einer \ac{waf}-Regel einer produktiven \ac{waf} verwendet werden würde:
 Die Regeln sind viel zu detailliert und auf einen spezifischen Fall ausgerichtet.
 
@@ -116,21 +118,21 @@ Die Aufgabenstellungen zu der hier beschreiben Lerneinheit sind in Anhang \ref{s
 
 \paragraph{SQL Injections}\ \\
 Die SQL-Injection ist eine Angriffstechnik bei der Nutzereingaben direkt und ungefiltert an eine SQL-Datenbank im Backend weitergegeben werden.
-Dies kann zu unvorhergesehenen nebeneffekten wie Befehlsausführung auf dem Server und Daten-Exhilaration führen.
-Nach OWASP-top-ten gehören SQL Injections zu den zehn schwerwiegendsten Schwachstellen, die in Webanwendungen zu finden sind.
+Dies kann zu unvorhergesehenen Nebeneffekten wie Befehlsausführung auf dem Server und Daten-Exhilaration führen.
+Nach \textit{OWASP-Top-Ten} gehören SQL Injections zu den zehn schwerwiegendsten Schwachstellen, die in Webanwendungen zu finden sind.
 
 Die Funktion und Verteidigung gegen SQL Injection Angriffe sollen Lernenden in dieser Aufgabe erarbeiten.
-Zuerst soll sich mit einer spezifischen Sicherheitslücke beschäftigt werden und diese mit einer eigenständigen \ac{waf}-Regel mittigiert werden.
+Zuerst soll sich mit einer spezifischen Sicherheitslücke beschäftigt werden und diese mit einer eigenständigen \ac{waf}-Regel mitigiert werden.
 In einem zweiten Schritt wird einen SQL-Injection generell betrachtet.
-Hierfür sollen die Lernenden die Gemeinsamkeiten von zwei \textit{Juice Shop} Challenges herausarbeiten und beide Schwachstellen mit einer Regel mittigieren.
+Hierfür sollen die Lernenden die Gemeinsamkeiten von zwei \textit{Juice Shop} Challenges herausarbeiten und beide Schwachstellen mit einer Regel mitigieren.
 
 Die erste Teilaufgabe beschäftigt sich mit einem SQL Login-Bypass.
-Zum Abgleich ob ein Nutzer existiert und das Passwort gültig ist wird im Backend die SQL-Datenbank genutzt.
+Zum Abgleich, ob ein Nutzer existiert und das Passwort gültig ist, wird im Backend die SQL-Datenbank genutzt.
 Ein Angreifer kann in dieser \textit{Juice Shop} Challenge an den Nutzernamen einen Vergleich in SQL Syntax anhängen und somit einen gültigen Login erzwingen ohne das Passwort eines Nutzers zu kennen.
 
-Um diesen Angriff erkennen zu können sollen sich die Lernenden auf escape syntax fokussieren, mit deren Hilfe ein SQL-Befehl beendet werden kann um danach eigene Befehle auszuführen.
+Um diesen Angriff erkennen zu können, sollen sich die Lernenden auf escape syntax fokussieren, mit deren Hilfe ein SQL-Befehl beendet werden kann, um danach eigene Befehle auszuführen.
 
-zwei Beispiel2 könnten wie Folgt aussehen:
+Zwei Beispiele könnten wie Folgt aussehen:
 
 \begin{verbatim}
 SecRule ARGS:email "@rx ^['].*--" \ 
@@ -146,8 +148,13 @@ In beiden Fällen wird nach dem Beginn eines SQL Kommentars gesucht.
 Die beiden dargestellten Möglichkeiten suchen vor dem Kommentar jedoch nach unterschiedlichen Angriffsmustern.
 Im ersten Beispiel werden Hochkommata gemacht, die in einer Mailadresse nicht vertreten sein sollten.
 Im zweiten Fall wird nach einem Vergleich ($==$) gesucht, der zwar theoretisch in einem nicht bösartigen Szenario vorkommen könnte, jedoch eher unwahrscheinlich ist und keine Einschränkung für Nutzer darstellen würde.
+Der \ac{http}-Error-Code der in diesen Beispielen zurückgegeben wird unterscheidet sich zu denen, die in den Regeln aus Aufgabe 1 (siehe Kapitel \ref{sec:learning-unit-1-meta}) vorkommen.
+Dies liegt an der unterschiedlichen Situation:
+In diesem Beispiel handelt es sich um Fehlende Autorisierung eine Anfrage zu machen:
+Der status code 401 (Unauthorized) wird gewählt.
+Im vorherigen Beispiel ist der Zugang zu der Resource generell verboten: der status code 403 (Forbidden) wird gewählt.
 
-Im Zweiten Teil der Aufgabe soll sich nun auf das generelle filtern von SQL-Syntax fokussiert werden.
+Im zweiten Teil der Aufgabe soll sich nun auf das generelle filtern von SQL-Syntax fokussiert werden.
 Die beiden Challenges die die Lernenden analysieren sollen weisen SQL-Injection Schwachstellen im HTTP-Body auf.
 Damit die Lernenden keine Regeln schreiben können, die sich nur auf einen spezifischen Fall beschränkt sollen die Lernenden eine Regel für beide Challenges schreiben.
 

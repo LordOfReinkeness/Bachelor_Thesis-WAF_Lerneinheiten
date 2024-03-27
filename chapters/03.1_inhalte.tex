@@ -1,8 +1,8 @@
-Dieses Kapitel beinhaltet die Beschreibung der Laborumgebung deren Erstellung eines der Hauptziele dieser Thesis ist.
+Dieses Kapitel beschreibt die Laborumgebung, deren Erstellung eines der Hauptziele dieser Thesis ist.
 Es werden zuerst Abwägungen zu den Inhalten, die übermittelt werden sollen, angestellt.
 Des Weiteren werden Produkte evaluiert die für die Realisierung der Laborumgebung genutzt werden können und deren Nutzung in der Laborumgebung beschrieben.
 Es wird sowohl eine \ac{waf} als auch eine Anwendung benötigt, die zu schützende Schwachstellen aufweist.
-Final werden die erstellten lerneinheiten beschrieben und Abwägungen angestellt wie die Lerneinheiten die erarbeiteten Leerinhalte übermitteln können.
+Final werden die erstellten Lerneinheiten beschrieben und Abwägungen angestellt wie die Lerneinheiten die erarbeiteten Lerninhalte übermitteln können.
 
 \subsection{Zielsetzungen und grundlegende Überlegungen}
 \label{sec:learnings-metha}
@@ -11,12 +11,12 @@ Final werden die erstellten lerneinheiten beschrieben und Abwägungen angestellt
 % ToDo Waf wird in Vorlesung vorgestellt
 % ToDO Zeitvorgabe
 Der Fokus der Lerneinheiten soll auf der Funktion einer \ac{waf} liegen.
-Die Lerneinheiten sind nicht geeignet um das vollständige Aufgabenfeld  von \ac{waf}-Consultants zu vermitteln.
-Der Fokus liegt auf dem Erkennen, Verstehen und abwehren von Cyber-Angriffen.
+Die Lerneinheiten sind nicht geeignet, um das vollständige Aufgabenfeld  von \ac{waf}-Consultants zu vermitteln.
+Der Fokus liegt auf dem Erkennen, Verstehen und Abwehren von Cyber-Angriffen.
 Im Betrieb einer \ac{waf} wird das hierfür notwendige Regelwerk mit den Produkten vorkonfiguriert ausgeliefert.
 Die Aufgaben in diesem Fall sind die Reaktion und Adaption der \ac{waf} auf entstehende Fehler um die Nutzung der zu schütztenden Webseite ohne Funktions-Einschränkungen zu ermöglichen.
 
-In der Laborumgebung sollen diese vorkonfigurierten Regeln von den Lernenden erarbeitet werden.
+In der Laborumgebung sollen diese grundlegenden Regeln von den Lernenden erarbeitet werden, so dass auf diese vorkonfigurierten Regeln verzichtet werden kann.
 Die entstehende Konfiguration ist sehr reduziert und punktuell und kann in einem realen Szenario nicht ansatzweise Sicherheitsvorteile erbringen.
 Die bei einer produktiven \ac{waf} mitgelieferten Regelwerke werden von Spezialisten erstellt und mittels mathematischer Methoden auf Allgemeingültigkeit und Vollständigkeit geprüft und optimiert. \\
 
@@ -26,12 +26,12 @@ Die Laborumgebung ist nicht dafür ausgelegt dies theoretischen Grundlagen zu ve
 Die Lerneinheit soll in einer Vorlesung mit 4 SWS innerhalb dreier Wochen durchführbar sein.
 Das Heißt es werden pro Lerneinheit 3 bis 5 Stunden Zeitaufwand angesetzt.
 
-Die Laborumgebung besteht aus drei, aufeinander aufbauenden Lerneinheiten.
+Die Laborumgebung besteht aus drei aufeinander aufbauenden Lerneinheiten.
 In der ersten Lerneinheit soll, nachdem sich mit dem Aufbau der Laborumgebung vertraut gemacht wird, die generelle Position einer \ac{waf} im Netzwerkverkehr beschrieben werden.
-Es sollen unkompliziert zugängliche Inhalte des \ac{http}-Protokolls analysiert werden um den generellen Aufbau einer einer Regel und die schritte der Verarbeitung in einer \ac{waf} zu Verstehen.\\
+Es sollen unkompliziert zugängliche Inhalte des \ac{http}-Protokolls analysiert werden um den generellen Aufbau einer einer Regel und die Schritte der Verarbeitung in einer \ac{waf} zu verstehen.\\
 
-Die Zweite Lerneinheit beschäftigt sich mit grundlegenden Angriffen die von einer \ac{waf} abgefangen werden können.
-Hierfür werden einige grundlegende Schwachstellen herangezogen die sowohl in der Realität auftreten als auch ohne Vorkenntnisse mit Sicherheitslücken in Webanwendung verständlich sind.
+Die zweite Lerneinheit beschäftigt sich mit grundlegenden Angriffen die von einer \ac{waf} abgefangen werden können.
+Hierfür werden einige triviale Schwachstellen herangezogen die sowohl in der Realität auftreten als auch ohne Vorkenntnisse mit Sicherheitslücken in Webanwendung verständlich sind.
 Die benötigten Vorkenntnisse sollen nur im Bereich der Software-Entwicklung und der Erstellung von Webseiten sowie einem Grundverständnis des \ac{http}-Protokolls liegen.
 Anhand dieser Kenntnisse und der Beschreibung von Schwachstellen in der zu schütztenden Webanwendung soll ich ein Verständnis der Angriffsvektoren erarbeitet werden und ein Regelwerk erstellt werden, das diese abdeckt und die Ausnutzung vereitelt.
 
@@ -39,6 +39,6 @@ Um neben dem Regelwerk auch einen Einblick in den betrieb einer \ac{waf} zu verm
 Hier sollen die Lernenden mit einer Fehlerhaften \ac{waf}-Regel Konfrontiert werden, die das rechtmäßige Funktionieren der Webanwendung  hinter der \ac{waf} beschränkt.
 Sie sollen diese Regel analysieren, mit den Folgen für die Netzwerkkommunikation beschäftigen und die Regeln adaptieren, sodas die Funktion der Webseite wiederhergestellt werden kann.
 Des Weiteren soll die dritte Lerneinheit sich mit Techniken der Filter-evasion beschäftigen.
-Hier sollen sich die Lernenden mit Techniken auseinandersetzen, die genutzt werden können um zu verhinder, dass ein Regulärer Ausdruck einen schädlichen Inhalt als solchen erkennt.
+Hier sollen sich die Lernenden mit Techniken auseinandersetzen, die genutzt werden können um zu verhinder, dass ein regulärer Ausdruck einen schädlichen Inhalt als solchen erkennt.
 Solche Techniken werden in realen Angriffsszenarien an einem Filter vorbei Angriffe zu ermöglicht.
 Eine \ac{waf} bietet auch für derartige Angriffe Verteidigungen.
