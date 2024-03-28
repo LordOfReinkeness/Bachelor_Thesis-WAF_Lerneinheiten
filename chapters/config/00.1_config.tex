@@ -1,24 +1,28 @@
 % PACKAGES
-%% DOCUMENT FORMATTING
+%% document formatting
 \usepackage[default]{sourcesanspro}
 \usepackage[nottoc,numbib]{tocbibind}
 
-%% Languages
+%% languages
 \usepackage[ngerman]{babel}
 \usepackage{csquotes}
 
-%% Hyperlinks
+%% hyperlinks
 \usepackage{hyperref}
 \usepackage{url}
 
-%% GRAPHICS
+%% graphics
 \usepackage{graphicx}
 \usepackage{geometry}
 
-%% CITATION
+%% citation
 \usepackage{acronym}
 \usepackage[style=ieee]{biblatex}
 \usepackage{floatrow}
+
+%% code listings
+\usepackage{listings}
+\usepackage{xcolor}
 
 
 % CONFIGURATION
@@ -41,3 +45,30 @@
 \tocsection
 \tocfile{\listfigurename}{lof}
 \endgroup}
+
+%% listing style
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}

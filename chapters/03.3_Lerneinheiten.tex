@@ -44,15 +44,15 @@ In dieser Aufgabe in der sich die Lernenden das erste Mal mit \ac{waf}-Regeln be
 Für den Einstieg soll sich zuerst mit der Syntax der \textit{ModSecurity} Regeln anhand einfacher Beispiele beschäftigt werden.
 Hierfür werden zwei Challenges des \textit{Juice Shops} herangezogen deren Lösungen ohne größere Probleme nachvollziehbar sind.
 In der Ersten dieser Aufgaben soll ein Pfad unzugänglich gemacht werden, auf dem sensitive Informationen preisgegeben werden.
-Die hierfür notwendige Regeln ist verhältnismäßig unkompliziert und kann beispielsweise wie Folgt aussehen:
+Die hierfür notwendige Regeln ist verhältnismäßig unkompliziert und kann beispielsweise wie Folgt aussehen:\\
 
-\begin{verbatim}
+\begin{lstlisting}
 SecRule REQUEST_URI "@streq /ftp/acquisitions.md" \
     "id:1, \
     msg:'Stop access to critical /ftp/aquisitions.md', \
     deny, \
     status:403"
-\end{verbatim}
+\end{lstlisting}\ \\
 
 Der zweite Teil der Aufgabe erfordert es, den Inhalt eines \ac{http}-Bodies zu parsen und zu analysieren.
 Die zugehörige Challenge im \textit{Juice Shop} weist eine Schwachstelle auf, in der Parameter im Backend nicht auf Gültigkeit geprüft werden.
@@ -64,43 +64,44 @@ Zwei Beispiele wären:\\
 
 \begin{itemize}
     \item Mithilfe eines regulären Ausdrucks ($[\land 1-5]$):
-    \begin{verbatim}
-    SecRule REQUEST_HEADERS:Content-Type "application/json" \
-        "phase:2, id:3, t:none, t:lowercase, \
-        log, ctl:requestBodyProcessor=JSON" \
-        chain, \
-        msg:'JSON parameter rating found in request body'"
-    
-        SecRule REQUEST_BODY:rating "@rx [^1-5]" \
-            "id:4, phase:2, \
-            deny, log, status:403"
-    \end{verbatim}
+
+    \begin{lstlisting}
+SecRule REQUEST_HEADERS:Content-Type "application/json" \
+    "phase:2, id:3, t:none, t:lowercase, \
+    log, ctl:requestBodyProcessor=JSON" \
+    chain, \
+    msg:'JSON parameter rating found in request body'"
+
+    SecRule REQUEST_BODY:rating "@rx [^1-5]" \
+        "id:4, phase:2, \
+        deny, log, status:403"
+    \end{lstlisting}
 
     \item Mithilfe von Vergleichsoperationen (\textit{@gt 5} und \textit{@lt 1}):
-    \begin{verbatim}
-    SecRule REQUEST_HEADERS:Content-Type "application/json" \
-        "phase:2, id:3, t:none, t:lowercase, \
-        log, ctl:requestBodyProcessor=JSON" \
-        chain, \
-        msg:'JSON parameter rating found in request body'"
-        
-        SecRule ARGS:rating "@gt 5" \
-            "id:4, phase:2, \
-            deny, log, status:403"
+    \begin{lstlisting}
+SecRule REQUEST_HEADERS:Content-Type "application/json" \
+    "phase:2, id:3, t:none, t:lowercase, \
+    log, ctl:requestBodyProcessor=JSON" \
+    chain, \
+    msg:'JSON parameter rating found in request body'"
     
-        SecRule ARGS:rating "@lt 1" \
-            "id:5, phase:2, \
-            deny, log, status:403"
-    \end{verbatim}
+    SecRule ARGS:rating "@gt 5" \
+        "id:4, phase:2, \
+        deny, log, status:403"
+
+    SecRule ARGS:rating "@lt 1" \
+        "id:5, phase:2, \
+        deny, log, status:403"
+    \end{lstlisting}
 \end{itemize}
 
 Diese Challenges sollen den Lernenden grundlegende Konzepte zum Aufbau einer \textit{ModSecurity} Regel beibringen:
 \begin{itemize}
-    \item Den grundlegenden Aufbau nach der Struktur
+    \item Den grundlegenden Aufbau nach der Struktur:
+    In der erst das Ziel der Operation (VARIABLE), dann die Matching-Operation (OPERATOR) und dann das Verfahren nach dem \textit{Match} (TRANSFORMATIONS,ACTIONS) beschrieben werden.
     \begin{verbatim}
-        SecRule VARIABLE [OPERATOR] [TRANSFORMATIONS,ACTIONS]
+SecRule VARIABLE [OPERATOR] [TRANSFORMATIONS,ACTIONS]
     \end{verbatim}
-    in der erst das Ziel der Operation (VARIABLE), dann die Matching-Operation (OPERATOR) und dann das Verfahren nach dem \textit{Match} (TRANSFORMATIONS,ACTIONS) beschrieben werden.
     \item Das Prinzip des \textit{Multi Stage Processing}: Nicht die ganze \ac{http}-Nachricht steht zur gleichen Zeit zur Verfügung. Der Zugriff auf ein JSON-Body Element kann, wie in dem Beispiel oben, also erst nach vorherigem Parsing betrachtet werden.
 \end{itemize}
 
@@ -132,9 +133,9 @@ Ein Angreifer kann in dieser \textit{Juice Shop} Challenge an den Nutzernamen ei
 
 Um diesen Angriff erkennen zu können, sollen sich die Lernenden auf escape syntax fokussieren, mit deren Hilfe ein SQL-Befehl beendet werden kann, um danach eigene Befehle auszuführen.
 
-Zwei Beispiele könnten wie Folgt aussehen:
+Zwei Beispiele könnten wie Folgt aussehen:\\
 
-\begin{verbatim}
+\begin{lstlisting}
 SecRule ARGS:email "@rx ^['].*--" \ 
     "id:6, phase:2, \
     deny,log,status:401"
@@ -142,7 +143,7 @@ SecRule ARGS:email "@rx ^['].*--" \
 SecRule ARGS:email "@rx ==\w*--" \
     "id:7, phase:2, \
     deny,log,status:401"
-\end{verbatim}
+\end{lstlisting}
 
 In beiden Fällen wird nach dem Beginn eines SQL Kommentars gesucht.
 Die beiden dargestellten Möglichkeiten suchen vor dem Kommentar jedoch nach unterschiedlichen Angriffsmustern.
@@ -158,12 +159,11 @@ Im zweiten Teil der Aufgabe soll sich nun auf das generelle filtern von SQL-Synt
 Die beiden Challenges die die Lernenden analysieren sollen weisen SQL-Injection Schwachstellen im HTTP-Body auf.
 Damit die Lernenden keine Regeln schreiben können, die sich nur auf einen spezifischen Fall beschränkt sollen die Lernenden eine Regel für beide Challenges schreiben.
 
-Ein Lösungsvorschlag für das generelle Erkennen einer SQL-INjection Attacke kann sein die sql keywords zu erkennen wie in dem folgenden regulären Ausdruck nachvollziehbar ist.
+Ein Lösungsvorschlag für das generelle Erkennen einer SQL-INjection Attacke kann sein die sql keywords zu erkennen wie in dem folgenden regulären Ausdruck nachvollziehbar ist.\\
 
-\begin{verbatim}
-\s*(select|union|update|delete|insert|drop|--|or|and|alter|exec
-|create|script|table|from|where|join|having|cast)\s*
-\end{verbatim}
+\begin{lstlisting}
+\s*(select|union|update|delete|insert|drop|--|or|and|alter|exec|create|script|table|from|where|join|having|cast)\s*
+\end{lstlisting}\ \\
 
 Beim schreiben der Regel müssen die Lernenden darauf achten, dass die Regel keine unvorhergesehenen Nebeneffekte hat.
 Wird beispielsweise nur nach dem substring \verb|and| gefiltert, könnte ein Nutzer mit dem Namen \textit{Andy} Probleme bekommen die Webanwendung zu nutzen.\\
@@ -186,27 +186,27 @@ An diesem Beispiel ist es auch möglich das Umschreiben eines \ac{http}-Request 
 Im ersten Teil der Aufgabe sollen die Lernenden eine \ac{waf}-Regel schreiben die in eingehendem Traffic ein HTML-Tag und javascript erkennt und Blockiert.
 Es existieren mehrere Möglichkeiten einen solchen Angriff zu erkennen und abzuwehren.
 Anhand der öffnenden und schließenden HTML-Tags oder dem \textit{javascript} Tag.
-Im folgenden beispiel ist eine Möglichkeit dies anhand der HTML \textit{script Tags} zu tun dargestellt:
+Im folgenden beispiel ist eine Möglichkeit dies anhand der HTML \textit{script Tags} zu tun dargestellt:\\
 
-\begin{verbatim}
-    SecRule REQUEST_HEADERS:Content-Type "application/json \
-        [...]
-        SecRule ARGS: "@rx <script[^>]*>.*</script>|<[^>]+>" \
-        [...]
-\end{verbatim}
+\begin{lstlisting}
+SecRule REQUEST_HEADERS:Content-Type "application/json \
+    [...]
+    SecRule ARGS: "@rx <script[^>]*>.*</script>|<[^>]+>" \
+    [...]
+\end{lstlisting}\ \\
 
 Für eine allgemeine Lösungen nicht hinreichende, jedoch in dem spezifischen Fall der Übung gültige Lösung wäre das erkennen des javascript codes.
 Das Hierfür zum Testen genutzte \textit{javascript:alert} ist austauschbar und würde keinen zuverlässigen Schutz sorgen.
 
 Der Zweite Teil der Aufgabe beschäftigt sich mit dem mit dem setzen des \textit{X-XSS-Protection} Headers.
 Hierfür muss in einer Regel ausgehender Netzwerkverkehr erkannt werden.
-Anstatt diesen zu blockieren kann der Header gesetzt werde, wie im Folgenden Beispiel zu sehen ist:
+Anstatt diesen zu blockieren kann der Header gesetzt werde, wie im Folgenden Beispiel zu sehen ist:\\
 
-\begin{verbatim}
+\begin{lstlisting}
 SecRule RESPONSE_HEADERS:@streq 200 \
    "id:10, phase:3, nolog, pass,\
    hdrOut: Header set X-XSS-Protection '1; mode=block'"
-\end{verbatim}
+\end{lstlisting}\ \\
 
 Die Lernenden sollen nach Abschluss dieser Lerneinheit ein Verständnis für die Funktion eines \ac{xss} haben.
 Außerdem soll ein Bewusstsein für die Funktion der \ac{xss}-Protection Header bestehen, die einen wichtigen ersten Verteidigungsschritt gegen diese Angriffe darstellen.

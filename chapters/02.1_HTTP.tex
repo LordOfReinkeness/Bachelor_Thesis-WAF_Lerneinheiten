@@ -1,24 +1,25 @@
 Das \ac{http} ist ein Protokoll, das in der Internet-Kommunikation zum Einsatz kommt.
 Es dient zur Übertragung von Daten zwischen einem Client und einem Server und wird hauptsächlich zur Auslieferung beziehungsweise Bedienung von Webanwendungen genutzt.
-Seit der Einführung in 1991 wurde es in mehreren \acp{rfc} erweitert und ist inzwischen in Version drei\cite{onlineIETFErhebtHTTP2022}.\\
+Seit der Einführung im Jahr 1991 wurde es in mehreren \acp{rfc} erweitert und ist inzwischen in Version drei\cite{onlineIETFErhebtHTTP2022}.\\
 
 Das der \ac{http}-Kommunikation zu Grunde liegende Interaktionsmuster erfolgt nach den \textit{Request-Response-Pattern}.
 Ein Client beginnt die Kommunikation und fragt Daten oder Daten-Operationen an einem Server an.
 Der Server beantwortet diese Anfrage\footnote{Im folgenden werden \ac{http}-Anfrage und das Englische \ac{http}-Request synonym verwendet. Das Gleiche gilt für \ac{http}-Antwort und \ac{http}-Response} und sendet dem Client Informationen wie die Verarbeitung erfolgt ist und die Angeforderten Daten.
 Diese Kommunikation erfolgt über TCP.
+
 Ist ein Request-Response Cycle abgeschlossen, wird die TCP-Verbindung gekappt und der Server kann keine weiteren Nachrichten an den Client schicken bis dieser eine neue Anfrage startet.
 Übertragen werden können Texte in diversen Formatierungen wie beispielsweise \textit{HTML-Dokument} oder \textit{JSON-Strings}, es ist jedoch auch möglich binäre Daten wie \textit{Bilddateien} zu übertragen.
 HTML ist ein \textit{Plaintext}-Protokoll, die Kommunikation erfolgt unverschlüsselt.
-Außerdem ist \ac{http} Textbasiert, eine Nachricht wird in Textform übertragen und ist menschenlesbar.
+Außerdem ist \ac{http} textbasiert, eine Nachricht wird in Textform übertragen und ist menschenlesbar.
 
-Die oben beschrieben Eigenschaften beziehen sich auf \ac{http} in Version 1.
+Die oben beschriebenen Eigenschaften beziehen sich auf \ac{http} in Version 1.
 Seit dieser Version wurden einige Erweiterungen an \ac{http} vorgenommen, hauptsächlich mit dem Ziel die Kommunikationsgeschwindigkeit des Protokolls zu erhöhen.
-So kann TCP-Pipelining genutzt werden um mehrere TCP-Nachrichten nacheinander zu schicken ohne Bestätigung des Erhaltens der Nachricht abzuwarten.
+So kann TCP-Pipelining genutzt werden um mehrere TCP-Nachrichten nacheinander zu schicken ohne Bestätigung des Erhaltens der Nachricht abwarten zu müssen.
 Außerdem werden Push-Nachrichten unterstützt:
 Der Server kann durch Aufrechterhaltung einer TCP-Verbindung weitere \ac{http}-Nachrichten an den Client schicken.
-Mit Version 3 wurde \ac{http} Außerdem auf das Stream-basierte QUIC Protokoll umgestellt um die Kommunikation weiter zu optimieren\cite{OverviewHTTPHTTP2023}.\\
+Mit Version 3 wurde \ac{http} außerdem auf das Stream-basierte QUIC Protokoll umgestellt um die Kommunikation weiter zu optimieren\cite{OverviewHTTPHTTP2023}.\\
 
-Da die grundlegenden Funktion von \ac{http} 1.0 und 1.1 ausreichend ist, um eine \ac{waf} zu erklären, wird im Folgenden nur diese betrachtet.
+Da die grundlegende Funktion von \ac{http} 1.0 und 1.1 ausreichend ist, um eine \ac{waf} zu erklären, wird im Folgenden nur diese betrachtet.
 
 \paragraph{\ac{http}-Nachrichten \cite{HTTPMessagesHTTP2024}}
 \ \\
@@ -81,12 +82,12 @@ Eine relevante Header-Gruppe sind die \textit{Representation-Header}, die die Fo
 Hier kann der Datentyp und die Formatierung des Bodies angegeben werden.
 Es is beispielsweise möglich zwischen einem Text und einem JSON-Objekt zu unterscheiden.
 
-Der \textbf{\ac{http}-Body} enthält die Daten die mit der \ac{http}-Nachricht versendet werden und ist optional
+Der \textbf{\ac{http}-Body} enthält die Daten die mit der \ac{http}-Nachricht versendet werden und ist optional.
 Im Body können sich beliebige Daten befinden: base64 codierte Daten, Datenstrukturen im JSON-Format oder einfacher Text als ASCII oder UTF-8 encodiert.\cite{HTTPMessagesHTTP2024}.\\
 
 Wie oben beschrieben, bietet \ac{http} zahlreiche Möglichkeiten an, einem Server Daten zu übergeben oder von einem solchen Daten zu erhalten.
 Alle Felder werden verarbeitet und bieten somit theoretisch die Möglichkeit zur Übermittlung schadhafter Daten.
 Auch die Möglichkeit zur codierten Übertragung, speziell im \textit{\ac{http}-Body}, kann zu diversen Angriffsvektoren führen.
-Eine \ac{waf} muss in der Lage sein alle dieser Parameter überblicken zu können um effektiven Schutz zu bieten.
+Eine \ac{waf} muss in der Lage sein, alle dieser Parameter überblicken zu können um effektiven Schutz zu bieten.
 
 \pagebreak    
